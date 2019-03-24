@@ -45,6 +45,7 @@ const Query = {
       },
       info
     );
-  }
+  },
+  
 };
 module.exports = Query;
