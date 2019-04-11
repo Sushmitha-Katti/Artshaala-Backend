@@ -20,11 +20,7 @@ type CartItem {
   item: Item # relationship to Item
   user: User! # relationship to User
 }
-type Image {
-  id: ID! @unique
-  image: String!
-  item: Item!
-}
+
 
 type Comment {
   id: ID! @unique
@@ -40,9 +36,10 @@ type Item {
   category:String
   brand:String
   specification: String!
-  images: [Image]!
+  images: [String]
   comment: Comment
   price: Int!
+  stock:Int
 }
 
 
