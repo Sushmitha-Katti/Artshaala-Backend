@@ -13,17 +13,23 @@ const Mutations = {
     if (!ctx.request.userId) {
       throw new Error("You must be logged in to do that!");
     }
+    const createitem = {...args};
+    console.log(args)
+    //const images= createitem.imagew;
+    delete createitem.images
+    console.log("******************")
+    console.log(createitem)
+    //console.log(images)
 
     const item = await ctx.db.mutation.createItem(
       {
         data: {
           //  to create a relationship between the Item and the User
-          user: {
-            connect: {
-              id: ctx.request.userId
-            }
-          },
-          ...args
+          
+          ...createitem,
+          images:{
+            set: args.images
+          }
         }
       },
       info

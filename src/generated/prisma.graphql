@@ -6,10 +6,6 @@ type AggregateComment {
   count: Int!
 }
 
-type AggregateImage {
-  count: Int!
-}
-
 type AggregateItem {
   count: Int!
 }
@@ -357,189 +353,6 @@ input CommentWhereUniqueInput {
 
 scalar DateTime
 
-type Image {
-  id: ID!
-  image: String!
-  item: Item!
-}
-
-type ImageConnection {
-  pageInfo: PageInfo!
-  edges: [ImageEdge]!
-  aggregate: AggregateImage!
-}
-
-input ImageCreateInput {
-  image: String!
-  item: ItemCreateOneWithoutImagesInput!
-}
-
-input ImageCreateManyWithoutItemInput {
-  create: [ImageCreateWithoutItemInput!]
-  connect: [ImageWhereUniqueInput!]
-}
-
-input ImageCreateWithoutItemInput {
-  image: String!
-}
-
-type ImageEdge {
-  node: Image!
-  cursor: String!
-}
-
-enum ImageOrderByInput {
-  id_ASC
-  id_DESC
-  image_ASC
-  image_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type ImagePreviousValues {
-  id: ID!
-  image: String!
-}
-
-input ImageScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
-  AND: [ImageScalarWhereInput!]
-  OR: [ImageScalarWhereInput!]
-  NOT: [ImageScalarWhereInput!]
-}
-
-type ImageSubscriptionPayload {
-  mutation: MutationType!
-  node: Image
-  updatedFields: [String!]
-  previousValues: ImagePreviousValues
-}
-
-input ImageSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ImageWhereInput
-  AND: [ImageSubscriptionWhereInput!]
-  OR: [ImageSubscriptionWhereInput!]
-  NOT: [ImageSubscriptionWhereInput!]
-}
-
-input ImageUpdateInput {
-  image: String
-  item: ItemUpdateOneRequiredWithoutImagesInput
-}
-
-input ImageUpdateManyDataInput {
-  image: String
-}
-
-input ImageUpdateManyMutationInput {
-  image: String
-}
-
-input ImageUpdateManyWithoutItemInput {
-  create: [ImageCreateWithoutItemInput!]
-  delete: [ImageWhereUniqueInput!]
-  connect: [ImageWhereUniqueInput!]
-  set: [ImageWhereUniqueInput!]
-  disconnect: [ImageWhereUniqueInput!]
-  update: [ImageUpdateWithWhereUniqueWithoutItemInput!]
-  upsert: [ImageUpsertWithWhereUniqueWithoutItemInput!]
-  deleteMany: [ImageScalarWhereInput!]
-  updateMany: [ImageUpdateManyWithWhereNestedInput!]
-}
-
-input ImageUpdateManyWithWhereNestedInput {
-  where: ImageScalarWhereInput!
-  data: ImageUpdateManyDataInput!
-}
-
-input ImageUpdateWithoutItemDataInput {
-  image: String
-}
-
-input ImageUpdateWithWhereUniqueWithoutItemInput {
-  where: ImageWhereUniqueInput!
-  data: ImageUpdateWithoutItemDataInput!
-}
-
-input ImageUpsertWithWhereUniqueWithoutItemInput {
-  where: ImageWhereUniqueInput!
-  update: ImageUpdateWithoutItemDataInput!
-  create: ImageCreateWithoutItemInput!
-}
-
-input ImageWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
-  item: ItemWhereInput
-  AND: [ImageWhereInput!]
-  OR: [ImageWhereInput!]
-  NOT: [ImageWhereInput!]
-}
-
-input ImageWhereUniqueInput {
-  id: ID
-}
-
 type Item {
   id: ID!
   title: String!
@@ -547,9 +360,10 @@ type Item {
   category: String
   brand: String
   specification: String!
-  images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image!]
+  images: [String!]!
   comment: Comment
   price: Int!
+  stock: Int
 }
 
 type ItemConnection {
@@ -558,15 +372,20 @@ type ItemConnection {
   aggregate: AggregateItem!
 }
 
+input ItemCreateimagesInput {
+  set: [String!]
+}
+
 input ItemCreateInput {
   title: String!
   type: String!
   category: String
   brand: String
   specification: String!
-  images: ImageCreateManyWithoutItemInput
+  images: ItemCreateimagesInput
   comment: CommentCreateOneWithoutItemInput
   price: Int!
+  stock: Int
 }
 
 input ItemCreateOneInput {
@@ -579,29 +398,15 @@ input ItemCreateOneWithoutCommentInput {
   connect: ItemWhereUniqueInput
 }
 
-input ItemCreateOneWithoutImagesInput {
-  create: ItemCreateWithoutImagesInput
-  connect: ItemWhereUniqueInput
-}
-
 input ItemCreateWithoutCommentInput {
   title: String!
   type: String!
   category: String
   brand: String
   specification: String!
-  images: ImageCreateManyWithoutItemInput
+  images: ItemCreateimagesInput
   price: Int!
-}
-
-input ItemCreateWithoutImagesInput {
-  title: String!
-  type: String!
-  category: String
-  brand: String
-  specification: String!
-  comment: CommentCreateOneWithoutItemInput
-  price: Int!
+  stock: Int
 }
 
 type ItemEdge {
@@ -624,6 +429,8 @@ enum ItemOrderByInput {
   specification_DESC
   price_ASC
   price_DESC
+  stock_ASC
+  stock_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -637,7 +444,9 @@ type ItemPreviousValues {
   category: String
   brand: String
   specification: String!
+  images: [String!]!
   price: Int!
+  stock: Int
 }
 
 type ItemSubscriptionPayload {
@@ -664,9 +473,14 @@ input ItemUpdateDataInput {
   category: String
   brand: String
   specification: String
-  images: ImageUpdateManyWithoutItemInput
+  images: ItemUpdateimagesInput
   comment: CommentUpdateOneWithoutItemInput
   price: Int
+  stock: Int
+}
+
+input ItemUpdateimagesInput {
+  set: [String!]
 }
 
 input ItemUpdateInput {
@@ -675,9 +489,10 @@ input ItemUpdateInput {
   category: String
   brand: String
   specification: String
-  images: ImageUpdateManyWithoutItemInput
+  images: ItemUpdateimagesInput
   comment: CommentUpdateOneWithoutItemInput
   price: Int
+  stock: Int
 }
 
 input ItemUpdateManyMutationInput {
@@ -686,7 +501,9 @@ input ItemUpdateManyMutationInput {
   category: String
   brand: String
   specification: String
+  images: ItemUpdateimagesInput
   price: Int
+  stock: Int
 }
 
 input ItemUpdateOneInput {
@@ -705,31 +522,15 @@ input ItemUpdateOneRequiredWithoutCommentInput {
   connect: ItemWhereUniqueInput
 }
 
-input ItemUpdateOneRequiredWithoutImagesInput {
-  create: ItemCreateWithoutImagesInput
-  update: ItemUpdateWithoutImagesDataInput
-  upsert: ItemUpsertWithoutImagesInput
-  connect: ItemWhereUniqueInput
-}
-
 input ItemUpdateWithoutCommentDataInput {
   title: String
   type: String
   category: String
   brand: String
   specification: String
-  images: ImageUpdateManyWithoutItemInput
+  images: ItemUpdateimagesInput
   price: Int
-}
-
-input ItemUpdateWithoutImagesDataInput {
-  title: String
-  type: String
-  category: String
-  brand: String
-  specification: String
-  comment: CommentUpdateOneWithoutItemInput
-  price: Int
+  stock: Int
 }
 
 input ItemUpsertNestedInput {
@@ -740,11 +541,6 @@ input ItemUpsertNestedInput {
 input ItemUpsertWithoutCommentInput {
   update: ItemUpdateWithoutCommentDataInput!
   create: ItemCreateWithoutCommentInput!
-}
-
-input ItemUpsertWithoutImagesInput {
-  update: ItemUpdateWithoutImagesDataInput!
-  create: ItemCreateWithoutImagesInput!
 }
 
 input ItemWhereInput {
@@ -832,9 +628,6 @@ input ItemWhereInput {
   specification_not_starts_with: String
   specification_ends_with: String
   specification_not_ends_with: String
-  images_every: ImageWhereInput
-  images_some: ImageWhereInput
-  images_none: ImageWhereInput
   comment: CommentWhereInput
   price: Int
   price_not: Int
@@ -844,6 +637,14 @@ input ItemWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  stock: Int
+  stock_not: Int
+  stock_in: [Int!]
+  stock_not_in: [Int!]
+  stock_lt: Int
+  stock_lte: Int
+  stock_gt: Int
+  stock_gte: Int
   AND: [ItemWhereInput!]
   OR: [ItemWhereInput!]
   NOT: [ItemWhereInput!]
@@ -868,12 +669,6 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
-  createImage(data: ImageCreateInput!): Image!
-  updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
-  updateManyImages(data: ImageUpdateManyMutationInput!, where: ImageWhereInput): BatchPayload!
-  upsertImage(where: ImageWhereUniqueInput!, create: ImageCreateInput!, update: ImageUpdateInput!): Image!
-  deleteImage(where: ImageWhereUniqueInput!): Image
-  deleteManyImages(where: ImageWhereInput): BatchPayload!
   createItem(data: ItemCreateInput!): Item!
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
@@ -1378,9 +1173,6 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
-  image(where: ImageWhereUniqueInput!): Image
-  images(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Image]!
-  imagesConnection(where: ImageWhereInput, orderBy: ImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImageConnection!
   item(where: ItemWhereUniqueInput!): Item
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
@@ -1399,7 +1191,6 @@ type Query {
 type Subscription {
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
-  image(where: ImageSubscriptionWhereInput): ImageSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
