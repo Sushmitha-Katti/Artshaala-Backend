@@ -40,6 +40,7 @@ type Item {
   comment: Comment
   price: Int!
   stock:Int
+  size:String
 }
 
 
