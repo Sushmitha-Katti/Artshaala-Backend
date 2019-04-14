@@ -364,6 +364,7 @@ type Item {
   comment: Comment
   price: Int!
   stock: Int
+  size: String
 }
 
 type ItemConnection {
@@ -386,6 +387,7 @@ input ItemCreateInput {
   comment: CommentCreateOneWithoutItemInput
   price: Int!
   stock: Int
+  size: String
 }
 
 input ItemCreateOneInput {
@@ -407,6 +409,7 @@ input ItemCreateWithoutCommentInput {
   images: ItemCreateimagesInput
   price: Int!
   stock: Int
+  size: String
 }
 
 type ItemEdge {
@@ -431,6 +434,8 @@ enum ItemOrderByInput {
   price_DESC
   stock_ASC
   stock_DESC
+  size_ASC
+  size_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -447,6 +452,7 @@ type ItemPreviousValues {
   images: [String!]!
   price: Int!
   stock: Int
+  size: String
 }
 
 type ItemSubscriptionPayload {
@@ -477,6 +483,7 @@ input ItemUpdateDataInput {
   comment: CommentUpdateOneWithoutItemInput
   price: Int
   stock: Int
+  size: String
 }
 
 input ItemUpdateimagesInput {
@@ -493,6 +500,7 @@ input ItemUpdateInput {
   comment: CommentUpdateOneWithoutItemInput
   price: Int
   stock: Int
+  size: String
 }
 
 input ItemUpdateManyMutationInput {
@@ -504,6 +512,7 @@ input ItemUpdateManyMutationInput {
   images: ItemUpdateimagesInput
   price: Int
   stock: Int
+  size: String
 }
 
 input ItemUpdateOneInput {
@@ -531,6 +540,7 @@ input ItemUpdateWithoutCommentDataInput {
   images: ItemUpdateimagesInput
   price: Int
   stock: Int
+  size: String
 }
 
 input ItemUpsertNestedInput {
@@ -645,6 +655,20 @@ input ItemWhereInput {
   stock_lte: Int
   stock_gt: Int
   stock_gte: Int
+  size: String
+  size_not: String
+  size_in: [String!]
+  size_not_in: [String!]
+  size_lt: String
+  size_lte: String
+  size_gt: String
+  size_gte: String
+  size_contains: String
+  size_not_contains: String
+  size_starts_with: String
+  size_not_starts_with: String
+  size_ends_with: String
+  size_not_ends_with: String
   AND: [ItemWhereInput!]
   OR: [ItemWhereInput!]
   NOT: [ItemWhereInput!]
