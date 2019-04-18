@@ -37,7 +37,7 @@ type Comment {
 }
 
 type Item {
-    id: ID!@id
+  id: ID!@id
   title: String!
   type:String!
   category:String
