@@ -205,9 +205,10 @@ input CartItemWhereUniqueInput {
 
 type Comment {
   id: ID!
-  comment: String!
+  comment: String
   rating: Float
   item: Item!
+  user: User!
 }
 
 type CommentConnection {
@@ -217,19 +218,10 @@ type CommentConnection {
 }
 
 input CommentCreateInput {
-  comment: String!
+  comment: String
   rating: Float
-  item: ItemCreateOneWithoutCommentInput!
-}
-
-input CommentCreateOneWithoutItemInput {
-  create: CommentCreateWithoutItemInput
-  connect: CommentWhereUniqueInput
-}
-
-input CommentCreateWithoutItemInput {
-  comment: String!
-  rating: Float
+  item: ItemCreateOneInput!
+  user: UserCreateOneInput!
 }
 
 type CommentEdge {
@@ -252,7 +244,7 @@ enum CommentOrderByInput {
 
 type CommentPreviousValues {
   id: ID!
-  comment: String!
+  comment: String
   rating: Float
 }
 
@@ -277,31 +269,13 @@ input CommentSubscriptionWhereInput {
 input CommentUpdateInput {
   comment: String
   rating: Float
-  item: ItemUpdateOneRequiredWithoutCommentInput
+  item: ItemUpdateOneRequiredInput
+  user: UserUpdateOneRequiredInput
 }
 
 input CommentUpdateManyMutationInput {
   comment: String
   rating: Float
-}
-
-input CommentUpdateOneWithoutItemInput {
-  create: CommentCreateWithoutItemInput
-  update: CommentUpdateWithoutItemDataInput
-  upsert: CommentUpsertWithoutItemInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: CommentWhereUniqueInput
-}
-
-input CommentUpdateWithoutItemDataInput {
-  comment: String
-  rating: Float
-}
-
-input CommentUpsertWithoutItemInput {
-  update: CommentUpdateWithoutItemDataInput!
-  create: CommentCreateWithoutItemInput!
 }
 
 input CommentWhereInput {
@@ -342,6 +316,7 @@ input CommentWhereInput {
   rating_gt: Float
   rating_gte: Float
   item: ItemWhereInput
+  user: UserWhereInput
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -361,7 +336,6 @@ type Item {
   brand: String
   specification: String!
   images: [String!]!
-  comment: Comment
   price: Int!
   stock: Int
   size: String
@@ -384,7 +358,6 @@ input ItemCreateInput {
   brand: String
   specification: String!
   images: ItemCreateimagesInput
-  comment: CommentCreateOneWithoutItemInput
   price: Int!
   stock: Int
   size: String
@@ -393,23 +366,6 @@ input ItemCreateInput {
 input ItemCreateOneInput {
   create: ItemCreateInput
   connect: ItemWhereUniqueInput
-}
-
-input ItemCreateOneWithoutCommentInput {
-  create: ItemCreateWithoutCommentInput
-  connect: ItemWhereUniqueInput
-}
-
-input ItemCreateWithoutCommentInput {
-  title: String!
-  type: String!
-  category: String
-  brand: String
-  specification: String!
-  images: ItemCreateimagesInput
-  price: Int!
-  stock: Int
-  size: String
 }
 
 type ItemEdge {
@@ -480,7 +436,6 @@ input ItemUpdateDataInput {
   brand: String
   specification: String
   images: ItemUpdateimagesInput
-  comment: CommentUpdateOneWithoutItemInput
   price: Int
   stock: Int
   size: String
@@ -497,7 +452,6 @@ input ItemUpdateInput {
   brand: String
   specification: String
   images: ItemUpdateimagesInput
-  comment: CommentUpdateOneWithoutItemInput
   price: Int
   stock: Int
   size: String
@@ -524,33 +478,16 @@ input ItemUpdateOneInput {
   connect: ItemWhereUniqueInput
 }
 
-input ItemUpdateOneRequiredWithoutCommentInput {
-  create: ItemCreateWithoutCommentInput
-  update: ItemUpdateWithoutCommentDataInput
-  upsert: ItemUpsertWithoutCommentInput
+input ItemUpdateOneRequiredInput {
+  create: ItemCreateInput
+  update: ItemUpdateDataInput
+  upsert: ItemUpsertNestedInput
   connect: ItemWhereUniqueInput
-}
-
-input ItemUpdateWithoutCommentDataInput {
-  title: String
-  type: String
-  category: String
-  brand: String
-  specification: String
-  images: ItemUpdateimagesInput
-  price: Int
-  stock: Int
-  size: String
 }
 
 input ItemUpsertNestedInput {
   update: ItemUpdateDataInput!
   create: ItemCreateInput!
-}
-
-input ItemUpsertWithoutCommentInput {
-  update: ItemUpdateWithoutCommentDataInput!
-  create: ItemCreateWithoutCommentInput!
 }
 
 input ItemWhereInput {
@@ -638,7 +575,6 @@ input ItemWhereInput {
   specification_not_starts_with: String
   specification_ends_with: String
   specification_not_ends_with: String
-  comment: CommentWhereInput
   price: Int
   price_not: Int
   price_in: [Int!]

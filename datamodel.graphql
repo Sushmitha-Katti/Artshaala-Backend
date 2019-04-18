@@ -24,9 +24,10 @@ type CartItem {
 
 type Comment {
   id: ID! @unique
-  comment: String!
+  comment: String
   rating: Float
   item:Item!
+  user:User!
 }
 
 type Item {
@@ -37,7 +38,7 @@ type Item {
   brand:String
   specification: String!
   images: [String]
-  comment: Comment
+  #comment: [Comment]
   price: Int!
   stock:Int
   size:String

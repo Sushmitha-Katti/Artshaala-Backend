@@ -7,7 +7,7 @@ const { randomBytes } = require("crypto");
 //const stripe = require("../stripe");
 
 const Mutations = {
-  // for creating new item
+  //--------------------------------- for creating new item-------------------------------
   async createItem(parent, args, ctx, info) {
     console.log(ctx.request.userId);
     if (!ctx.request.userId) {
@@ -39,7 +39,7 @@ const Mutations = {
 
     return item;
   },
-
+  //--------------------------------------Update New Item----------------------------------------------------
   updateItem(parent, args, ctx, info) {
     // first take a copy of the updates
     const updates = { ...args };
@@ -56,7 +56,7 @@ const Mutations = {
       info
     );
   },
-
+//-------------------------------------------deleteItem------------------------------------------------------------------
   async deleteItem(parent, args, ctx, info) {
     const where = { id: args.id };
     // 1. find the item
@@ -75,7 +75,7 @@ const Mutations = {
     return ctx.db.mutation.deleteItem({ where }, info);
   },
 
-  //Signup
+  //------------------------------------------Signup--------------------------------------------------------------------
   async signup(parent, args, ctx, info) {
     // lowercase their email
     args.email = args.email.toLowerCase();
@@ -103,7 +103,7 @@ const Mutations = {
     return user;
   },
 
-  //SignIn
+  //--------------------------------------------------SignIn-----------------------------------------------------------------
   async signin(parent, { email, password }, ctx, info) {
     // 1. check if there is a user with that email
     const user = await ctx.db.query.user({ where: { email } });
@@ -126,13 +126,13 @@ const Mutations = {
     return user;
   },
 
-  //SignOut
+  //----------------------------------------------SignOut---------------------------------------------------------------------
   signout(parent, args, ctx, info) {
     ctx.response.clearCookie("token");
     return { message: "Successfully logged out" };
   },
 
-  //Reset Password
+  //-------------------------------------Reset Password--------------------------------------------------------------------
   async resetPassword(parent, args, ctx, info) {
     // 1. check if the passwords match
     if (args.password !== args.confirmPassword) {
@@ -170,6 +170,7 @@ const Mutations = {
     // 8. return the new user
     return updatedUser;
   },
+//-----------------------------------------Create Order-------------------------------------------------------
 
   async createOrder(parent, args, ctx, info) {
     // 1. Query the current user and make sure they are signed in
@@ -230,6 +231,7 @@ const Mutations = {
     // 7. Return the Order to the client
     return order;
   },
+  //--------------------------------------Add To Cart------------------------------------------------------------------------
   async addToCart(parent, args, ctx, info) {
     // 1. Make sure they are signed in
     const { userId } = ctx.request;
@@ -269,6 +271,7 @@ const Mutations = {
       info
     );
   },
+  //------------------------------------------Remove from cart---------------
   async removeFromCart(parent, args, ctx, info) {
     // 1. Find the cart item
     const cartItem = await ctx.db.query.cartItem(
@@ -292,7 +295,49 @@ const Mutations = {
       },
       info
     );
-  }
+  },
+
+   // for creating Comment
+   async createComment(parent, args, ctx, info) {
+    //console.log(ctx.request.userId);
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
+    
+    //const images= createitem.imagew;
+    //delete createitem.images
+    //console.log("******************")
+    //console.log(createitem)
+    //console.log(images)
+    const comment = { ...args };
+    // remove the ID from the updates
+    delete comment.itemid;
+
+    const comment = await ctx.db.mutation.createComment(
+      {
+        data: {
+          ...comment,
+          // to create a relationship between the Item and the User
+          user: {
+            connect: {
+              id: ctx.request.userId,
+            },
+          },
+          item:{
+            connect:{
+              id: args.itemid,
+            }
+          },
+          
+        }
+      },
+      info
+    );
+
+    console.log(comment);
+
+    return comment;
+  },
 };
 
 module.exports = Mutations;
