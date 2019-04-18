@@ -1,14 +1,33 @@
 const { forwardTo } = require("prisma-binding");
 const Query = {
   items: forwardTo("db"),
+
   item: forwardTo("db"),
+
   itemsConnection: forwardTo("db"),
+
   async users(parent, args, ctx, info) {
     // 1. Check if they are logged in
 
     // 2. if they do, query all the users!
     return ctx.db.query.users({}, info);
   },
+
+
+  me(parent, args, ctx, info) {
+    // check if there is a current user ID
+    if (!ctx.request.userId) {
+      return null;
+    }
+    return ctx.db.query.user(
+      {
+        where: { id: ctx.request.userId },
+      },
+      info
+    );
+  },
+
+
   async order(parent, args, ctx, info) {
     // 1. Make sure they are logged in
     if (!ctx.request.userId) {

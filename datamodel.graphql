@@ -4,41 +4,50 @@ enum Permission {
 }
 
 type User {
-  id: ID! @unique
+    id: ID!@id
   name: String!
-  email: String! @unique
+  email: String!  @unique
   password: String!
   resetToken: String
   resetTokenExpiry: Float
-  permissions: [Permission]
-  cart: [CartItem!]!
+  permissions: [Permission]@scalarList(strategy: RELATION)
+  cart: [CartItem!]!@scalarList(strategy: RELATION)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type CartItem {
-  id: ID! @unique
+    id: ID!@id
   quantity: Int! @default(value: 1)
   item: Item # relationship to Item
   user: User! # relationship to User
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 
 type Comment {
-  id: ID! @unique
+    id: ID!@id
   comment: String
   rating: Float
   item:Item!
   user:User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Item {
-  id: ID! @unique
+    id: ID!@id
   title: String!
   type:String!
   category:String
   brand:String
   specification: String!
-  images: [String]
+  images: [String] @scalarList(strategy: RELATION)
+  description:String!
   #comment: [Comment]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   price: Int!
   stock:Int
   size:String
@@ -46,18 +55,20 @@ type Item {
 
 
 type Order {
-  id: ID! @unique
+    id: ID!@id
   items: [OrderItem!]!
   total: Int!
   user: User!
   charge: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type OrderItem {
-  id: ID! @unique
+    id: ID!@id
   title: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   description: String!
   image: String!
   price: Int!

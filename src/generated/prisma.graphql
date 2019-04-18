@@ -31,6 +31,8 @@ type CartItem {
   quantity: Int!
   item: Item
   user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CartItemConnection {
@@ -74,6 +76,8 @@ enum CartItemOrderByInput {
 type CartItemPreviousValues {
   id: ID!
   quantity: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input CartItemScalarWhereInput {
@@ -99,6 +103,22 @@ input CartItemScalarWhereInput {
   quantity_lte: Int
   quantity_gt: Int
   quantity_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [CartItemScalarWhereInput!]
   OR: [CartItemScalarWhereInput!]
   NOT: [CartItemScalarWhereInput!]
@@ -194,6 +214,22 @@ input CartItemWhereInput {
   quantity_gte: Int
   item: ItemWhereInput
   user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [CartItemWhereInput!]
   OR: [CartItemWhereInput!]
   NOT: [CartItemWhereInput!]
@@ -209,6 +245,8 @@ type Comment {
   rating: Float
   item: Item!
   user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CommentConnection {
@@ -246,6 +284,8 @@ type CommentPreviousValues {
   id: ID!
   comment: String
   rating: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CommentSubscriptionPayload {
@@ -317,6 +357,22 @@ input CommentWhereInput {
   rating_gte: Float
   item: ItemWhereInput
   user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -336,6 +392,9 @@ type Item {
   brand: String
   specification: String!
   images: [String!]!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   price: Int!
   stock: Int
   size: String
@@ -358,6 +417,7 @@ input ItemCreateInput {
   brand: String
   specification: String!
   images: ItemCreateimagesInput
+  description: String!
   price: Int!
   stock: Int
   size: String
@@ -386,16 +446,18 @@ enum ItemOrderByInput {
   brand_DESC
   specification_ASC
   specification_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   price_ASC
   price_DESC
   stock_ASC
   stock_DESC
   size_ASC
   size_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type ItemPreviousValues {
@@ -406,6 +468,9 @@ type ItemPreviousValues {
   brand: String
   specification: String!
   images: [String!]!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   price: Int!
   stock: Int
   size: String
@@ -436,6 +501,7 @@ input ItemUpdateDataInput {
   brand: String
   specification: String
   images: ItemUpdateimagesInput
+  description: String
   price: Int
   stock: Int
   size: String
@@ -452,6 +518,7 @@ input ItemUpdateInput {
   brand: String
   specification: String
   images: ItemUpdateimagesInput
+  description: String
   price: Int
   stock: Int
   size: String
@@ -464,6 +531,7 @@ input ItemUpdateManyMutationInput {
   brand: String
   specification: String
   images: ItemUpdateimagesInput
+  description: String
   price: Int
   stock: Int
   size: String
@@ -575,6 +643,36 @@ input ItemWhereInput {
   specification_not_starts_with: String
   specification_ends_with: String
   specification_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   price: Int
   price_not: Int
   price_in: [Int!]
@@ -696,6 +794,8 @@ type OrderEdge {
 type OrderItem {
   id: ID!
   title: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   description: String!
   image: String!
   price: Int!
@@ -733,6 +833,10 @@ enum OrderItemOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   description_ASC
   description_DESC
   image_ASC
@@ -741,15 +845,13 @@ enum OrderItemOrderByInput {
   price_DESC
   quantity_ASC
   quantity_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type OrderItemPreviousValues {
   id: ID!
   title: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   description: String!
   image: String!
   price: Int!
@@ -785,6 +887,22 @@ input OrderItemScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   description: String
   description_not: String
   description_in: [String!]
@@ -943,6 +1061,22 @@ input OrderItemWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   description: String
   description_not: String
   description_in: [String!]
@@ -1166,6 +1300,8 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission!]!
   cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserConnection {
@@ -1239,6 +1375,8 @@ type UserPreviousValues {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -1416,6 +1554,22 @@ input UserWhereInput {
   cart_every: CartItemWhereInput
   cart_some: CartItemWhereInput
   cart_none: CartItemWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

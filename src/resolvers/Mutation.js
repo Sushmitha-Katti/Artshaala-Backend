@@ -267,6 +267,7 @@ const Mutations = {
             connect: { id: args.id }
           }
         }
+        
       },
       info
     );
@@ -297,47 +298,47 @@ const Mutations = {
     );
   },
 
-   // for creating Comment
-   async createComment(parent, args, ctx, info) {
-    //console.log(ctx.request.userId);
-    if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
+   //---------------------------------------- for creating Comment---------------------------------------------------------
+//    async createComment(parent, args, ctx, info) {
+//     //console.log(ctx.request.userId);
+//     if (!ctx.request.userId) {
+//       throw new Error("You must be logged in to do that!");
+//     }
     
-    //const images= createitem.imagew;
-    //delete createitem.images
-    //console.log("******************")
-    //console.log(createitem)
-    //console.log(images)
-    const comment = { ...args };
-    // remove the ID from the updates
-    delete comment.itemid;
+//     //const images= createitem.imagew;
+//     //delete createitem.images
+//     //console.log("******************")
+//     //console.log(createitem)
+//     //console.log(images)
+//     const comment = { ...args };
+//     // remove the ID from the updates
+//     delete comment.itemid;
 
-    const comment = await ctx.db.mutation.createComment(
-      {
-        data: {
-          ...comment,
-          // to create a relationship between the Item and the User
-          user: {
-            connect: {
-              id: ctx.request.userId,
-            },
-          },
-          item:{
-            connect:{
-              id: args.itemid,
-            }
-          },
+//     const comment = await ctx.db.mutation.createComment(
+//       {
+//         data: {
+//           ...comment,
+//           // to create a relationship between the Item and the User
+//           user: {
+//             connect: {
+//               id: ctx.request.userId,
+//             },
+//           },
+//           item:{
+//             connect:{
+//               id: args.itemid,
+//             }
+//           },
           
-        }
-      },
-      info
-    );
+//         }
+//       },
+//       info
+//     );
 
-    console.log(comment);
+//     console.log(comment);
 
-    return comment;
-  },
+//     return comment;
+//   },
 };
 
 module.exports = Mutations;
