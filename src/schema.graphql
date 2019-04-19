@@ -30,6 +30,8 @@ type Query {
   order(id: ID!): Order
   orders(orderBy: OrderOrderByInput): [Order]!
   comments(where: CommentWhereInput):[Comment]
+  commentsConnection(where: CommentWhereInput,orderBy: CommentOrderByInput,skip: Int,after: String,before: String,first: Int,last: Int):CommentConnection!
+
 }
 
 type User{
