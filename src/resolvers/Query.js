@@ -6,9 +6,31 @@ const Query = {
 
   itemsConnection: forwardTo("db"),
 
+
+  
+
+  async comments(parent, args, ctx, info) {
+    // check item exists or not ?
+    
+    
+    return ctx.db.query.comments(
+      {
+        where: { item:{id:args.id}  }
+      },
+      info
+    );
+    
+   
+  },
+
+
+
+
   async users(parent, args, ctx, info) {
     // 1. Check if they are logged in
-
+    if (!ctx.request.userId) {
+      throw new Error("You arent logged in!");
+    }
     // 2. if they do, query all the users!
     return ctx.db.query.users({}, info);
   },
