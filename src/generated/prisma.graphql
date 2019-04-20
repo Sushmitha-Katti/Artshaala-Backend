@@ -1,3 +1,7 @@
+type AggregateBlog {
+  count: Int!
+}
+
 type AggregateCartItem {
   count: Int!
 }
@@ -24,6 +28,182 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
+}
+
+type Blog {
+  id: ID!
+  title: String!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  image: String!
+  headers: [String!]!
+  description: [String!]!
+  user: User!
+}
+
+type BlogConnection {
+  pageInfo: PageInfo!
+  edges: [BlogEdge]!
+  aggregate: AggregateBlog!
+}
+
+input BlogCreatedescriptionInput {
+  set: [String!]
+}
+
+input BlogCreateheadersInput {
+  set: [String!]
+}
+
+input BlogCreateInput {
+  title: String!
+  updateAt: DateTime!
+  image: String!
+  headers: BlogCreateheadersInput
+  description: BlogCreatedescriptionInput
+  user: UserCreateOneInput!
+}
+
+type BlogEdge {
+  node: Blog!
+  cursor: String!
+}
+
+enum BlogOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updateAt_ASC
+  updateAt_DESC
+  image_ASC
+  image_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type BlogPreviousValues {
+  id: ID!
+  title: String!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  image: String!
+  headers: [String!]!
+  description: [String!]!
+}
+
+type BlogSubscriptionPayload {
+  mutation: MutationType!
+  node: Blog
+  updatedFields: [String!]
+  previousValues: BlogPreviousValues
+}
+
+input BlogSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BlogWhereInput
+  AND: [BlogSubscriptionWhereInput!]
+  OR: [BlogSubscriptionWhereInput!]
+  NOT: [BlogSubscriptionWhereInput!]
+}
+
+input BlogUpdatedescriptionInput {
+  set: [String!]
+}
+
+input BlogUpdateheadersInput {
+  set: [String!]
+}
+
+input BlogUpdateInput {
+  title: String
+  updateAt: DateTime
+  image: String
+  headers: BlogUpdateheadersInput
+  description: BlogUpdatedescriptionInput
+  user: UserUpdateOneRequiredInput
+}
+
+input BlogUpdateManyMutationInput {
+  title: String
+  updateAt: DateTime
+  image: String
+  headers: BlogUpdateheadersInput
+  description: BlogUpdatedescriptionInput
+}
+
+input BlogWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updateAt: DateTime
+  updateAt_not: DateTime
+  updateAt_in: [DateTime!]
+  updateAt_not_in: [DateTime!]
+  updateAt_lt: DateTime
+  updateAt_lte: DateTime
+  updateAt_gt: DateTime
+  updateAt_gte: DateTime
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  user: UserWhereInput
+  AND: [BlogWhereInput!]
+  OR: [BlogWhereInput!]
+  NOT: [BlogWhereInput!]
+}
+
+input BlogWhereUniqueInput {
+  id: ID
 }
 
 type CartItem {
@@ -866,6 +1046,12 @@ input ItemWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createBlog(data: BlogCreateInput!): Blog!
+  updateBlog(data: BlogUpdateInput!, where: BlogWhereUniqueInput!): Blog
+  updateManyBlogs(data: BlogUpdateManyMutationInput!, where: BlogWhereInput): BatchPayload!
+  upsertBlog(where: BlogWhereUniqueInput!, create: BlogCreateInput!, update: BlogUpdateInput!): Blog!
+  deleteBlog(where: BlogWhereUniqueInput!): Blog
+  deleteManyBlogs(where: BlogWhereInput): BatchPayload!
   createCartItem(data: CartItemCreateInput!): CartItem!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
@@ -1412,6 +1598,9 @@ enum Permission {
 }
 
 type Query {
+  blog(where: BlogWhereUniqueInput!): Blog
+  blogs(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blog]!
+  blogsConnection(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlogConnection!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
@@ -1434,6 +1623,7 @@ type Query {
 }
 
 type Subscription {
+  blog(where: BlogSubscriptionWhereInput): BlogSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload

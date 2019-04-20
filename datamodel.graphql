@@ -17,17 +17,28 @@ type User {
 }
 
 type CartItem {
-    id: ID!@id
-  quantity: Int! @default(value: 1)
-  item: Item # relationship to Item
-  user: User! # relationship to User
+    id: ID! @id
+    quantity: Int! @default(value: 1)
+    item: Item # relationship to Item
+    user: User! # relationship to User
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+}
+
+type Blog {
+  id: ID! @id
+  title: String!
   createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
+  updateAt: DateTime! @updatedAt
+  image: String!
+  headers: [String]!@scalarList(strategy: RELATION)
+  description: [String]!@scalarList(strategy: RELATION)
+  user:User!
 }
 
 
 type Comment {
-    id: ID!@id
+  id: ID!@id
   comment: String
   rating: Float
   item:Item!
@@ -37,7 +48,7 @@ type Comment {
 }
 
 type Item {
-    id: ID!@id
+  id: ID!@id
   title: String!
   type:String!
   category:String
