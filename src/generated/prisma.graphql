@@ -33,8 +33,6 @@ type BatchPayload {
 type Blog {
   id: ID!
   title: String!
-  createdAt: DateTime!
-  updateAt: DateTime!
   image: String!
   headers: [String!]!
   description: [String!]!
@@ -57,7 +55,6 @@ input BlogCreateheadersInput {
 
 input BlogCreateInput {
   title: String!
-  updateAt: DateTime!
   image: String!
   headers: BlogCreateheadersInput
   description: BlogCreatedescriptionInput
@@ -74,12 +71,10 @@ enum BlogOrderByInput {
   id_DESC
   title_ASC
   title_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updateAt_ASC
-  updateAt_DESC
   image_ASC
   image_DESC
+  createdAt_ASC
+  createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -87,8 +82,6 @@ enum BlogOrderByInput {
 type BlogPreviousValues {
   id: ID!
   title: String!
-  createdAt: DateTime!
-  updateAt: DateTime!
   image: String!
   headers: [String!]!
   description: [String!]!
@@ -122,7 +115,6 @@ input BlogUpdateheadersInput {
 
 input BlogUpdateInput {
   title: String
-  updateAt: DateTime
   image: String
   headers: BlogUpdateheadersInput
   description: BlogUpdatedescriptionInput
@@ -131,7 +123,6 @@ input BlogUpdateInput {
 
 input BlogUpdateManyMutationInput {
   title: String
-  updateAt: DateTime
   image: String
   headers: BlogUpdateheadersInput
   description: BlogUpdatedescriptionInput
@@ -166,22 +157,6 @@ input BlogWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updateAt: DateTime
-  updateAt_not: DateTime
-  updateAt_in: [DateTime!]
-  updateAt_not_in: [DateTime!]
-  updateAt_lt: DateTime
-  updateAt_lte: DateTime
-  updateAt_gt: DateTime
-  updateAt_gte: DateTime
   image: String
   image_not: String
   image_in: [String!]
