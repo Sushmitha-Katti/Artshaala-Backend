@@ -30,8 +30,8 @@ type Blog {
   title: String!
   
   image: String!
-  headers: [String]!@scalarList(strategy: RELATION)
-  description: [String]!@scalarList(strategy: RELATION)
+  headers: String!
+  description: String!
   user:User!
 }
 

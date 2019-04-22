@@ -34,8 +34,8 @@ type Blog {
   id: ID!
   title: String!
   image: String!
-  headers: [String!]!
-  description: [String!]!
+  headers: String!
+  description: String!
   user: User!
 }
 
@@ -45,19 +45,11 @@ type BlogConnection {
   aggregate: AggregateBlog!
 }
 
-input BlogCreatedescriptionInput {
-  set: [String!]
-}
-
-input BlogCreateheadersInput {
-  set: [String!]
-}
-
 input BlogCreateInput {
   title: String!
   image: String!
-  headers: BlogCreateheadersInput
-  description: BlogCreatedescriptionInput
+  headers: String!
+  description: String!
   user: UserCreateOneInput!
 }
 
@@ -73,6 +65,10 @@ enum BlogOrderByInput {
   title_DESC
   image_ASC
   image_DESC
+  headers_ASC
+  headers_DESC
+  description_ASC
+  description_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -83,8 +79,8 @@ type BlogPreviousValues {
   id: ID!
   title: String!
   image: String!
-  headers: [String!]!
-  description: [String!]!
+  headers: String!
+  description: String!
 }
 
 type BlogSubscriptionPayload {
@@ -105,27 +101,19 @@ input BlogSubscriptionWhereInput {
   NOT: [BlogSubscriptionWhereInput!]
 }
 
-input BlogUpdatedescriptionInput {
-  set: [String!]
-}
-
-input BlogUpdateheadersInput {
-  set: [String!]
-}
-
 input BlogUpdateInput {
   title: String
   image: String
-  headers: BlogUpdateheadersInput
-  description: BlogUpdatedescriptionInput
+  headers: String
+  description: String
   user: UserUpdateOneRequiredInput
 }
 
 input BlogUpdateManyMutationInput {
   title: String
   image: String
-  headers: BlogUpdateheadersInput
-  description: BlogUpdatedescriptionInput
+  headers: String
+  description: String
 }
 
 input BlogWhereInput {
@@ -171,6 +159,34 @@ input BlogWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
+  headers: String
+  headers_not: String
+  headers_in: [String!]
+  headers_not_in: [String!]
+  headers_lt: String
+  headers_lte: String
+  headers_gt: String
+  headers_gte: String
+  headers_contains: String
+  headers_not_contains: String
+  headers_starts_with: String
+  headers_not_starts_with: String
+  headers_ends_with: String
+  headers_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   user: UserWhereInput
   AND: [BlogWhereInput!]
   OR: [BlogWhereInput!]
