@@ -19,6 +19,7 @@ type Mutation {
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
   createComment(comment: String, rating: Float!,itemid: ID!): Comment!
+  createNewsletter(email:String!): Newsletter!
 }
 
 type Query {
