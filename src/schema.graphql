@@ -22,6 +22,7 @@ type Mutation {
   createBlog(title: String!, author: String!, summery: String!, image: String!, headers:String!, description: String!): Blog!
   deleteBlog(id: ID!): Blog
   createNewsletter(email:String!): Newsletter!
+  createContact(email:String!, name:String!, phone: String!, message: String!, subject: String!): Contact!
 }
 
 type Query {

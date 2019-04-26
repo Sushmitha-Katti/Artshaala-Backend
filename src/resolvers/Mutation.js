@@ -13,6 +13,20 @@ const instance = new Razorpay({
 });
 
 const Mutations = {
+  //---------------------------------for Creating Contact--------------------------------------------
+  async createContact(parent, args, ctx, info){
+    const contactinfo = await ctx.db.mutation.createContact(
+      {
+        data:{
+          ...args,
+        }
+      },
+      info
+    );
+    return contactinfo;
+
+  },
+
   //----------------------------------Newsletter-----------------------------------------
   async createNewsletter(parent, args, ctx, info){
     const newsletter = await ctx.db.mutation.createNewsletter(
