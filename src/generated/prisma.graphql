@@ -41,10 +41,13 @@ type BatchPayload {
 type Blog {
   id: ID!
   title: String!
+  author: String!
+  summery: String!
   image: String!
   headers: String!
   description: String!
   user: User!
+  createdAt: DateTime!
 }
 
 type BlogConnection {
@@ -55,6 +58,8 @@ type BlogConnection {
 
 input BlogCreateInput {
   title: String!
+  author: String!
+  summery: String!
   image: String!
   headers: String!
   description: String!
@@ -71,6 +76,10 @@ enum BlogOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  author_ASC
+  author_DESC
+  summery_ASC
+  summery_DESC
   image_ASC
   image_DESC
   headers_ASC
@@ -86,9 +95,12 @@ enum BlogOrderByInput {
 type BlogPreviousValues {
   id: ID!
   title: String!
+  author: String!
+  summery: String!
   image: String!
   headers: String!
   description: String!
+  createdAt: DateTime!
 }
 
 type BlogSubscriptionPayload {
@@ -111,6 +123,8 @@ input BlogSubscriptionWhereInput {
 
 input BlogUpdateInput {
   title: String
+  author: String
+  summery: String
   image: String
   headers: String
   description: String
@@ -119,6 +133,8 @@ input BlogUpdateInput {
 
 input BlogUpdateManyMutationInput {
   title: String
+  author: String
+  summery: String
   image: String
   headers: String
   description: String
@@ -153,6 +169,34 @@ input BlogWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  author: String
+  author_not: String
+  author_in: [String!]
+  author_not_in: [String!]
+  author_lt: String
+  author_lte: String
+  author_gt: String
+  author_gte: String
+  author_contains: String
+  author_not_contains: String
+  author_starts_with: String
+  author_not_starts_with: String
+  author_ends_with: String
+  author_not_ends_with: String
+  summery: String
+  summery_not: String
+  summery_in: [String!]
+  summery_not_in: [String!]
+  summery_lt: String
+  summery_lte: String
+  summery_gt: String
+  summery_gte: String
+  summery_contains: String
+  summery_not_contains: String
+  summery_starts_with: String
+  summery_not_starts_with: String
+  summery_ends_with: String
+  summery_not_ends_with: String
   image: String
   image_not: String
   image_in: [String!]
@@ -196,6 +240,14 @@ input BlogWhereInput {
   description_ends_with: String
   description_not_ends_with: String
   user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [BlogWhereInput!]
   OR: [BlogWhereInput!]
   NOT: [BlogWhereInput!]
