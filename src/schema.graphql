@@ -21,6 +21,7 @@ type Mutation {
   createComment(comment: String, rating: Float!,itemid: ID!): Comment!
   createBlog(title: String!, image: String!, headers:String!, description: String!): Blog!
   deleteBlog(id: ID!): Blog
+  createNewsletter(email:String!): Newsletter!
 }
 
 type Query {
@@ -35,6 +36,7 @@ type Query {
   commentsConnection(where: CommentWhereInput,orderBy: CommentOrderByInput,skip: Int,after: String,before: String,first: Int,last: Int):CommentConnection!
   blogs: [Blog]!
   blog(id: ID!): Blog
+  newsletters(where: NewsletterWhereInput): [Newsletter]
 }
 
 type User{

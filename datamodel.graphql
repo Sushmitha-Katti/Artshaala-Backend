@@ -65,7 +65,7 @@ type Item {
 
 
 type Order {
-    id: ID!@id
+  id: ID!@id
   items: [OrderItem!]!
   total: Int!
   user: User!
@@ -75,7 +75,7 @@ type Order {
 }
 
 type OrderItem {
-    id: ID!@id
+  id: ID!@id
   title: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -83,5 +83,12 @@ type OrderItem {
   image: String!
   price: Int!
   quantity: Int! @default(value: 1)
+  itemid:ID
   user: User
+}
+
+
+type Newsletter{
+  id: ID! @id
+  email: String!
 }

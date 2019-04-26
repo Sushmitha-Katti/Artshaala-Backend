@@ -7,6 +7,22 @@ const { randomBytes } = require("crypto");
 //const stripe = require("../stripe");
 
 const Mutations = {
+  //----------------------------------Newsletter-----------------------------------------
+  async createNewsletter(parent, args, ctx, info){
+    const newsletter = await ctx.db.mutation.createNewsletter(
+      {
+        data:{
+          ...args,
+        }
+      },
+      info
+    );
+    return newsletter;
+
+  },
+
+
+
   //--------------------------------- for creating new item-------------------------------
   async createItem(parent, args, ctx, info) {
     console.log(ctx.request.userId);
@@ -205,6 +221,7 @@ const Mutations = {
       const orderItem = {
         ...cartItem.item,
         quantity: cartItem.quantity,
+        itemid:cartItem.item.id,
         user: { connect: { id: userId } }
       };
       delete orderItem.id;
@@ -378,5 +395,7 @@ const Mutations = {
     return deletedBlog;
   }
 };
+
+
 
 module.exports = Mutations;

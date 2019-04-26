@@ -16,6 +16,9 @@ const Query = {
     );
     return blog;
   },
+  newsletters: forwardTo("db"),
+  
+
   
 
   async comments(parent, args, ctx, info) {
