@@ -20,6 +20,7 @@ type Mutation {
   createOrder(token: String!): Order!
   createComment(comment: String, rating: Float!,itemid: ID!): Comment!
   createNewsletter(email:String!): Newsletter!
+  createContact(email:String!, name:String!, phone: String!, message: String!, subject: String!): Contact!
 }
 
 type Query {
