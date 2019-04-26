@@ -5,6 +5,17 @@ const Query = {
   item: forwardTo("db"),
   commentsConnection: forwardTo("db"),
   itemsConnection: forwardTo("db"),
+  blogs: forwardTo("db"),
+  
+  async blog(parent, args, ctx, info){
+    const blog = await ctx.db.query.blog(
+      {
+        where: { id: args.id}
+      },
+      info
+    );
+    return blog;
+  },
   newsletters: forwardTo("db"),
   
 

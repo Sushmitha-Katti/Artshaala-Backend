@@ -345,12 +345,6 @@ const Mutations = {
     
     delete review.itemid;
     console.log(review)
-
-
-
-   
-        
-
     const comment = await ctx.db.mutation.updateItem(
       {
         where: { id: args.itemid },
@@ -369,10 +363,6 @@ const Mutations = {
               }
         }
       },info);
-
-
-
-
         // data: {
         //   ...review,
         //   // to create a relationship between the Item and the User
@@ -396,6 +386,28 @@ const Mutations = {
 
     return comment;
   },
+
+  async createBlog(parent, args, ctx, info){
+    const item = await ctx.db.mutation.createBlog({
+      data: {
+        ...args,
+        user:{
+          connect: {
+            id: ctx.request.userId,
+          },
+        }
+        
+      }
+    }, info);
+    console.log(item)
+    return item;
+  },
+
+  async deleteBlog(parent, args, ctx, info){
+    const where = { id: args.id };
+    const deletedBlog = await ctx.db.mutation.deleteBlog({ where }, info);
+    return deletedBlog;
+  }
 };
 
 
