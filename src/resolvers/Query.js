@@ -5,7 +5,8 @@ const Query = {
   item: forwardTo("db"),
   commentsConnection: forwardTo("db"),
   itemsConnection: forwardTo("db"),
-
+  newsletters: forwardTo("db"),
+  
 
   
 

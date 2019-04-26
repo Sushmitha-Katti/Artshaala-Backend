@@ -8,7 +8,7 @@ const { randomBytes } = require("crypto");
 
 const Mutations = {
   //----------------------------------Newsletter-----------------------------------------
-  async createNewsletter(parent, args, cts, info){
+  async createNewsletter(parent, args, ctx, info){
     const newsletter = await ctx.db.mutation.createNewsletter(
       {
         data:{
