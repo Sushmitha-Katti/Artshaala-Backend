@@ -19,6 +19,8 @@ type Mutation {
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
   createComment(comment: String, rating: Float!,itemid: ID!): Comment!
+  createBlog(title: String!, image: String!, headers:String!, description: String!): Blog!
+  deleteBlog(id: ID!): Blog
 }
 
 type Query {
@@ -31,7 +33,8 @@ type Query {
   orders(orderBy: OrderOrderByInput): [Order]!
   comments(where: CommentWhereInput):[Comment]
   commentsConnection(where: CommentWhereInput,orderBy: CommentOrderByInput,skip: Int,after: String,before: String,first: Int,last: Int):CommentConnection!
-
+  blogs: [Blog]!
+  blog(id: ID!): Blog
 }
 
 type User{
