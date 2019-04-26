@@ -92,3 +92,12 @@ type Newsletter{
   id: ID! @id
   email: String!
 }
+type Contact{
+  id: ID! @id
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+
+}

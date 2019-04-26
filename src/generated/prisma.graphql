@@ -10,6 +10,10 @@ type AggregateComment {
   count: Int!
 }
 
+type AggregateContact {
+  count: Int!
+}
+
 type AggregateItem {
   count: Int!
 }
@@ -665,6 +669,190 @@ input CommentWhereUniqueInput {
   id: ID
 }
 
+type Contact {
+  id: ID!
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+}
+
+type ContactConnection {
+  pageInfo: PageInfo!
+  edges: [ContactEdge]!
+  aggregate: AggregateContact!
+}
+
+input ContactCreateInput {
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+}
+
+type ContactEdge {
+  node: Contact!
+  cursor: String!
+}
+
+enum ContactOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  phone_ASC
+  phone_DESC
+  subject_ASC
+  subject_DESC
+  message_ASC
+  message_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ContactPreviousValues {
+  id: ID!
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+}
+
+type ContactSubscriptionPayload {
+  mutation: MutationType!
+  node: Contact
+  updatedFields: [String!]
+  previousValues: ContactPreviousValues
+}
+
+input ContactSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ContactWhereInput
+  AND: [ContactSubscriptionWhereInput!]
+  OR: [ContactSubscriptionWhereInput!]
+  NOT: [ContactSubscriptionWhereInput!]
+}
+
+input ContactUpdateInput {
+  email: String
+  phone: String
+  subject: String
+  message: String
+  name: String
+}
+
+input ContactUpdateManyMutationInput {
+  email: String
+  phone: String
+  subject: String
+  message: String
+  name: String
+}
+
+input ContactWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  subject: String
+  subject_not: String
+  subject_in: [String!]
+  subject_not_in: [String!]
+  subject_lt: String
+  subject_lte: String
+  subject_gt: String
+  subject_gte: String
+  subject_contains: String
+  subject_not_contains: String
+  subject_starts_with: String
+  subject_not_starts_with: String
+  subject_ends_with: String
+  subject_not_ends_with: String
+  message: String
+  message_not: String
+  message_in: [String!]
+  message_not_in: [String!]
+  message_lt: String
+  message_lte: String
+  message_gt: String
+  message_gte: String
+  message_contains: String
+  message_not_contains: String
+  message_starts_with: String
+  message_not_starts_with: String
+  message_ends_with: String
+  message_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ContactWhereInput!]
+  OR: [ContactWhereInput!]
+  NOT: [ContactWhereInput!]
+}
+
+input ContactWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type Item {
@@ -1059,6 +1247,12 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createContact(data: ContactCreateInput!): Contact!
+  updateContact(data: ContactUpdateInput!, where: ContactWhereUniqueInput!): Contact
+  updateManyContacts(data: ContactUpdateManyMutationInput!, where: ContactWhereInput): BatchPayload!
+  upsertContact(where: ContactWhereUniqueInput!, create: ContactCreateInput!, update: ContactUpdateInput!): Contact!
+  deleteContact(where: ContactWhereUniqueInput!): Contact
+  deleteManyContacts(where: ContactWhereInput): BatchPayload!
   createItem(data: ItemCreateInput!): Item!
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
@@ -1745,6 +1939,9 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  contact(where: ContactWhereUniqueInput!): Contact
+  contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact]!
+  contactsConnection(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContactConnection!
   item(where: ItemWhereUniqueInput!): Item
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
@@ -1767,6 +1964,7 @@ type Subscription {
   blog(where: BlogSubscriptionWhereInput): BlogSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   newsletter(where: NewsletterSubscriptionWhereInput): NewsletterSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
