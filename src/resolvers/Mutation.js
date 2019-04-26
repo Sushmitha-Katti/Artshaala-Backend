@@ -5,6 +5,12 @@ const { randomBytes } = require("crypto");
 //const { transport, makeANiceEmail } = require("../mail");
 //const { hasPermission } = require("../utils");
 //const stripe = require("../stripe");
+const Razorpay = require("razorpay");
+
+const instance = new Razorpay({
+  key_id: process.env.RAZOR_PAY_KEY,
+  key_secret: process.env.RAZOR_PAY_SECRET
+});
 
 const Mutations = {
   //----------------------------------Newsletter-----------------------------------------
@@ -20,8 +26,6 @@ const Mutations = {
     return newsletter;
 
   },
-
-
 
   //--------------------------------- for creating new item-------------------------------
   async createItem(parent, args, ctx, info) {

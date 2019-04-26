@@ -1,7 +1,6 @@
 const { forwardTo } = require("prisma-binding");
 const Query = {
   items: forwardTo("db"),
-
   item: forwardTo("db"),
   commentsConnection: forwardTo("db"),
   itemsConnection: forwardTo("db"),
@@ -16,14 +15,9 @@ const Query = {
     );
     return blog;
   },
-  newsletters: forwardTo("db"),
-  
+  newsletters: forwardTo("db"),  
 
-  
-
-  async comments(parent, args, ctx, info) {
-    // check item exists or not ?
-    
+  async comments(parent, args, ctx, info) {    
     
     return ctx.db.query.comments(
       {

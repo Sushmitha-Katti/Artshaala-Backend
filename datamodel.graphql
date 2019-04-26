@@ -28,11 +28,13 @@ type CartItem {
 type Blog {
   id: ID! @id
   title: String!
-  
+  author: String!
+  summery: String!
   image: String!
   headers: String!
   description: String!
-  user:User!
+  user: User!
+  createdAt: DateTime! @createdAt
 }
 
 
