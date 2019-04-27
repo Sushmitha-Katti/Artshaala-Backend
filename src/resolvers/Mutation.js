@@ -74,6 +74,11 @@ const Mutations = {
   },
   //--------------------------------------Update New Item----------------------------------------------------
   updateItem(parent, args, ctx, info) {
+
+    //Check whether they are logged in or not
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
     // first take a copy of the updates
     const updates = { ...args };
     // remove the ID from the updates
@@ -89,6 +94,28 @@ const Mutations = {
       info
     );
   },
+  //-------------------------------------------Upadate Cart Item---------------------------------------------------------
+  updateCart(parent, args, ctx, info) {
+    // first take a copy of the updates
+    const updates = { ...args };
+   
+    // remove the ID from the updates
+   console.log('---------------')
+   console.log(updates)
+    delete updates.id;
+    console.log(args.id)
+    // run the update method
+    return ctx.db.mutation.updateCartItem(
+      {
+        data: updates,
+        where: {
+          id: args.id
+        }
+      },
+      info
+    );
+  },
+
 //-------------------------------------------deleteItem------------------------------------------------------------------
   async deleteItem(parent, args, ctx, info) {
     const where = { id: args.id };
