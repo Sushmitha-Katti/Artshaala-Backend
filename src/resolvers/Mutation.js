@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { randomBytes } = require("crypto");
-//const { promisify } = require("util");
-//const { transport, makeANiceEmail } = require("../mail");
+const { promisify } = require("util");
+const { transport, makeANiceEmail } = require("../mail");
 //const { hasPermission } = require("../utils");
 //const stripe = require("../stripe");
 
@@ -132,6 +132,52 @@ const Mutations = {
     return { message: "Successfully logged out" };
   },
 
+
+
+
+
+
+  async requestReset(parent, args, ctx, info) {
+    // 1. Check if this is a real user
+    const user = await ctx.db.query.user({ where: { email: args.email } });
+    if (!user) {
+      throw new Error(`No such user found for email ${args.email}`);
+    }
+    // 2. Set a reset token and expiry on that user
+    const randomBytesPromiseified = promisify(randomBytes);
+    const resetToken = (await randomBytesPromiseified(20)).toString('hex');
+    const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
+    const res = await ctx.db.mutation.updateUser({
+      where: { email: args.email },
+      data: { resetToken, resetTokenExpiry },
+    });
+    // console.log("response",res);
+   
+
+    // 3. Email them that reset token
+    const mailRes = await transport.sendMail({
+      from: 'artshaala@music.com',
+      to: user.email,
+      subject: 'Your Password Reset Token',
+      html: makeANiceEmail(`Your Password Reset Token is here!
+      \n\n
+      <a href="${process.env
+        .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+    });
+
+    // 4. Return the message
+    return { message: 'Thanks!' };
+  },
+
+
+
+
+
+
+
+
+
+
   //-------------------------------------Reset Password--------------------------------------------------------------------
   async resetPassword(parent, args, ctx, info) {
     // 1. check if the passwords match
@@ -235,6 +281,7 @@ const Mutations = {
   async addToCart(parent, args, ctx, info) {
     // 1. Make sure they are signed in
     const { userId } = ctx.request;
+   
     if (!userId) {
       throw new Error("You must be signed in soooon");
     }
