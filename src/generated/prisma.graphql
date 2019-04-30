@@ -1,3 +1,7 @@
+type AggregateBlog {
+  count: Int!
+}
+
 type AggregateCartItem {
   count: Int!
 }
@@ -6,7 +10,15 @@ type AggregateComment {
   count: Int!
 }
 
+type AggregateContact {
+  count: Int!
+}
+
 type AggregateItem {
+  count: Int!
+}
+
+type AggregateNewsletter {
   count: Int!
 }
 
@@ -24,6 +36,225 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
+}
+
+type Blog {
+  id: ID!
+  title: String!
+  author: String!
+  summery: String!
+  image: String!
+  headers: String!
+  description: String!
+  user: User!
+  createdAt: DateTime!
+}
+
+type BlogConnection {
+  pageInfo: PageInfo!
+  edges: [BlogEdge]!
+  aggregate: AggregateBlog!
+}
+
+input BlogCreateInput {
+  title: String!
+  author: String!
+  summery: String!
+  image: String!
+  headers: String!
+  description: String!
+  user: UserCreateOneInput!
+}
+
+type BlogEdge {
+  node: Blog!
+  cursor: String!
+}
+
+enum BlogOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  author_ASC
+  author_DESC
+  summery_ASC
+  summery_DESC
+  image_ASC
+  image_DESC
+  headers_ASC
+  headers_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type BlogPreviousValues {
+  id: ID!
+  title: String!
+  author: String!
+  summery: String!
+  image: String!
+  headers: String!
+  description: String!
+  createdAt: DateTime!
+}
+
+type BlogSubscriptionPayload {
+  mutation: MutationType!
+  node: Blog
+  updatedFields: [String!]
+  previousValues: BlogPreviousValues
+}
+
+input BlogSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BlogWhereInput
+  AND: [BlogSubscriptionWhereInput!]
+  OR: [BlogSubscriptionWhereInput!]
+  NOT: [BlogSubscriptionWhereInput!]
+}
+
+input BlogUpdateInput {
+  title: String
+  author: String
+  summery: String
+  image: String
+  headers: String
+  description: String
+  user: UserUpdateOneRequiredInput
+}
+
+input BlogUpdateManyMutationInput {
+  title: String
+  author: String
+  summery: String
+  image: String
+  headers: String
+  description: String
+}
+
+input BlogWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  author: String
+  author_not: String
+  author_in: [String!]
+  author_not_in: [String!]
+  author_lt: String
+  author_lte: String
+  author_gt: String
+  author_gte: String
+  author_contains: String
+  author_not_contains: String
+  author_starts_with: String
+  author_not_starts_with: String
+  author_ends_with: String
+  author_not_ends_with: String
+  summery: String
+  summery_not: String
+  summery_in: [String!]
+  summery_not_in: [String!]
+  summery_lt: String
+  summery_lte: String
+  summery_gt: String
+  summery_gte: String
+  summery_contains: String
+  summery_not_contains: String
+  summery_starts_with: String
+  summery_not_starts_with: String
+  summery_ends_with: String
+  summery_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  headers: String
+  headers_not: String
+  headers_in: [String!]
+  headers_not_in: [String!]
+  headers_lt: String
+  headers_lte: String
+  headers_gt: String
+  headers_gte: String
+  headers_contains: String
+  headers_not_contains: String
+  headers_starts_with: String
+  headers_not_starts_with: String
+  headers_ends_with: String
+  headers_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [BlogWhereInput!]
+  OR: [BlogWhereInput!]
+  NOT: [BlogWhereInput!]
+}
+
+input BlogWhereUniqueInput {
+  id: ID
 }
 
 type CartItem {
@@ -258,7 +489,18 @@ type CommentConnection {
 input CommentCreateInput {
   comment: String
   rating: Float
-  item: ItemCreateOneInput!
+  item: ItemCreateOneWithoutCommentInput!
+  user: UserCreateOneInput!
+}
+
+input CommentCreateManyWithoutItemInput {
+  create: [CommentCreateWithoutItemInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateWithoutItemInput {
+  comment: String
+  rating: Float
   user: UserCreateOneInput!
 }
 
@@ -288,6 +530,64 @@ type CommentPreviousValues {
   updatedAt: DateTime!
 }
 
+input CommentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  comment: String
+  comment_not: String
+  comment_in: [String!]
+  comment_not_in: [String!]
+  comment_lt: String
+  comment_lte: String
+  comment_gt: String
+  comment_gte: String
+  comment_contains: String
+  comment_not_contains: String
+  comment_starts_with: String
+  comment_not_starts_with: String
+  comment_ends_with: String
+  comment_not_ends_with: String
+  rating: Float
+  rating_not: Float
+  rating_in: [Float!]
+  rating_not_in: [Float!]
+  rating_lt: Float
+  rating_lte: Float
+  rating_gt: Float
+  rating_gte: Float
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CommentScalarWhereInput!]
+  OR: [CommentScalarWhereInput!]
+  NOT: [CommentScalarWhereInput!]
+}
+
 type CommentSubscriptionPayload {
   mutation: MutationType!
   node: Comment
@@ -309,13 +609,52 @@ input CommentSubscriptionWhereInput {
 input CommentUpdateInput {
   comment: String
   rating: Float
-  item: ItemUpdateOneRequiredInput
+  item: ItemUpdateOneRequiredWithoutCommentInput
   user: UserUpdateOneRequiredInput
+}
+
+input CommentUpdateManyDataInput {
+  comment: String
+  rating: Float
 }
 
 input CommentUpdateManyMutationInput {
   comment: String
   rating: Float
+}
+
+input CommentUpdateManyWithoutItemInput {
+  create: [CommentCreateWithoutItemInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutItemInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutItemInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
+input CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput!
+  data: CommentUpdateManyDataInput!
+}
+
+input CommentUpdateWithoutItemDataInput {
+  comment: String
+  rating: Float
+  user: UserUpdateOneRequiredInput
+}
+
+input CommentUpdateWithWhereUniqueWithoutItemInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutItemDataInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutItemInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutItemDataInput!
+  create: CommentCreateWithoutItemInput!
 }
 
 input CommentWhereInput {
@@ -382,6 +721,190 @@ input CommentWhereUniqueInput {
   id: ID
 }
 
+type Contact {
+  id: ID!
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+}
+
+type ContactConnection {
+  pageInfo: PageInfo!
+  edges: [ContactEdge]!
+  aggregate: AggregateContact!
+}
+
+input ContactCreateInput {
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+}
+
+type ContactEdge {
+  node: Contact!
+  cursor: String!
+}
+
+enum ContactOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  phone_ASC
+  phone_DESC
+  subject_ASC
+  subject_DESC
+  message_ASC
+  message_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ContactPreviousValues {
+  id: ID!
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+}
+
+type ContactSubscriptionPayload {
+  mutation: MutationType!
+  node: Contact
+  updatedFields: [String!]
+  previousValues: ContactPreviousValues
+}
+
+input ContactSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ContactWhereInput
+  AND: [ContactSubscriptionWhereInput!]
+  OR: [ContactSubscriptionWhereInput!]
+  NOT: [ContactSubscriptionWhereInput!]
+}
+
+input ContactUpdateInput {
+  email: String
+  phone: String
+  subject: String
+  message: String
+  name: String
+}
+
+input ContactUpdateManyMutationInput {
+  email: String
+  phone: String
+  subject: String
+  message: String
+  name: String
+}
+
+input ContactWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  subject: String
+  subject_not: String
+  subject_in: [String!]
+  subject_not_in: [String!]
+  subject_lt: String
+  subject_lte: String
+  subject_gt: String
+  subject_gte: String
+  subject_contains: String
+  subject_not_contains: String
+  subject_starts_with: String
+  subject_not_starts_with: String
+  subject_ends_with: String
+  subject_not_ends_with: String
+  message: String
+  message_not: String
+  message_in: [String!]
+  message_not_in: [String!]
+  message_lt: String
+  message_lte: String
+  message_gt: String
+  message_gte: String
+  message_contains: String
+  message_not_contains: String
+  message_starts_with: String
+  message_not_starts_with: String
+  message_ends_with: String
+  message_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ContactWhereInput!]
+  OR: [ContactWhereInput!]
+  NOT: [ContactWhereInput!]
+}
+
+input ContactWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type Item {
@@ -393,6 +916,7 @@ type Item {
   specification: String!
   images: [String!]!
   description: String!
+  comment(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   createdAt: DateTime!
   updatedAt: DateTime!
   price: Int!
@@ -418,6 +942,7 @@ input ItemCreateInput {
   specification: String!
   images: ItemCreateimagesInput
   description: String!
+  comment: CommentCreateManyWithoutItemInput
   price: Int!
   stock: Int
   size: String
@@ -426,6 +951,24 @@ input ItemCreateInput {
 input ItemCreateOneInput {
   create: ItemCreateInput
   connect: ItemWhereUniqueInput
+}
+
+input ItemCreateOneWithoutCommentInput {
+  create: ItemCreateWithoutCommentInput
+  connect: ItemWhereUniqueInput
+}
+
+input ItemCreateWithoutCommentInput {
+  title: String!
+  type: String!
+  category: String
+  brand: String
+  specification: String!
+  images: ItemCreateimagesInput
+  description: String!
+  price: Int!
+  stock: Int
+  size: String
 }
 
 type ItemEdge {
@@ -502,6 +1045,7 @@ input ItemUpdateDataInput {
   specification: String
   images: ItemUpdateimagesInput
   description: String
+  comment: CommentUpdateManyWithoutItemInput
   price: Int
   stock: Int
   size: String
@@ -519,6 +1063,7 @@ input ItemUpdateInput {
   specification: String
   images: ItemUpdateimagesInput
   description: String
+  comment: CommentUpdateManyWithoutItemInput
   price: Int
   stock: Int
   size: String
@@ -546,16 +1091,34 @@ input ItemUpdateOneInput {
   connect: ItemWhereUniqueInput
 }
 
-input ItemUpdateOneRequiredInput {
-  create: ItemCreateInput
-  update: ItemUpdateDataInput
-  upsert: ItemUpsertNestedInput
+input ItemUpdateOneRequiredWithoutCommentInput {
+  create: ItemCreateWithoutCommentInput
+  update: ItemUpdateWithoutCommentDataInput
+  upsert: ItemUpsertWithoutCommentInput
   connect: ItemWhereUniqueInput
+}
+
+input ItemUpdateWithoutCommentDataInput {
+  title: String
+  type: String
+  category: String
+  brand: String
+  specification: String
+  images: ItemUpdateimagesInput
+  description: String
+  price: Int
+  stock: Int
+  size: String
 }
 
 input ItemUpsertNestedInput {
   update: ItemUpdateDataInput!
   create: ItemCreateInput!
+}
+
+input ItemUpsertWithoutCommentInput {
+  update: ItemUpdateWithoutCommentDataInput!
+  create: ItemCreateWithoutCommentInput!
 }
 
 input ItemWhereInput {
@@ -657,6 +1220,9 @@ input ItemWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  comment_every: CommentWhereInput
+  comment_some: CommentWhereInput
+  comment_none: CommentWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -715,6 +1281,12 @@ input ItemWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createBlog(data: BlogCreateInput!): Blog!
+  updateBlog(data: BlogUpdateInput!, where: BlogWhereUniqueInput!): Blog
+  updateManyBlogs(data: BlogUpdateManyMutationInput!, where: BlogWhereInput): BatchPayload!
+  upsertBlog(where: BlogWhereUniqueInput!, create: BlogCreateInput!, update: BlogUpdateInput!): Blog!
+  deleteBlog(where: BlogWhereUniqueInput!): Blog
+  deleteManyBlogs(where: BlogWhereInput): BatchPayload!
   createCartItem(data: CartItemCreateInput!): CartItem!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
@@ -727,12 +1299,24 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createContact(data: ContactCreateInput!): Contact!
+  updateContact(data: ContactUpdateInput!, where: ContactWhereUniqueInput!): Contact
+  updateManyContacts(data: ContactUpdateManyMutationInput!, where: ContactWhereInput): BatchPayload!
+  upsertContact(where: ContactWhereUniqueInput!, create: ContactCreateInput!, update: ContactUpdateInput!): Contact!
+  deleteContact(where: ContactWhereUniqueInput!): Contact
+  deleteManyContacts(where: ContactWhereInput): BatchPayload!
   createItem(data: ItemCreateInput!): Item!
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   deleteItem(where: ItemWhereUniqueInput!): Item
   deleteManyItems(where: ItemWhereInput): BatchPayload!
+  createNewsletter(data: NewsletterCreateInput!): Newsletter!
+  updateNewsletter(data: NewsletterUpdateInput!, where: NewsletterWhereUniqueInput!): Newsletter
+  updateManyNewsletters(data: NewsletterUpdateManyMutationInput!, where: NewsletterWhereInput): BatchPayload!
+  upsertNewsletter(where: NewsletterWhereUniqueInput!, create: NewsletterCreateInput!, update: NewsletterUpdateInput!): Newsletter!
+  deleteNewsletter(where: NewsletterWhereUniqueInput!): Newsletter
+  deleteManyNewsletters(where: NewsletterWhereInput): BatchPayload!
   createOrder(data: OrderCreateInput!): Order!
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
@@ -757,6 +1341,106 @@ enum MutationType {
   CREATED
   UPDATED
   DELETED
+}
+
+type Newsletter {
+  id: ID!
+  email: String!
+}
+
+type NewsletterConnection {
+  pageInfo: PageInfo!
+  edges: [NewsletterEdge]!
+  aggregate: AggregateNewsletter!
+}
+
+input NewsletterCreateInput {
+  email: String!
+}
+
+type NewsletterEdge {
+  node: Newsletter!
+  cursor: String!
+}
+
+enum NewsletterOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type NewsletterPreviousValues {
+  id: ID!
+  email: String!
+}
+
+type NewsletterSubscriptionPayload {
+  mutation: MutationType!
+  node: Newsletter
+  updatedFields: [String!]
+  previousValues: NewsletterPreviousValues
+}
+
+input NewsletterSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: NewsletterWhereInput
+  AND: [NewsletterSubscriptionWhereInput!]
+  OR: [NewsletterSubscriptionWhereInput!]
+  NOT: [NewsletterSubscriptionWhereInput!]
+}
+
+input NewsletterUpdateInput {
+  email: String
+}
+
+input NewsletterUpdateManyMutationInput {
+  email: String
+}
+
+input NewsletterWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  AND: [NewsletterWhereInput!]
+  OR: [NewsletterWhereInput!]
+  NOT: [NewsletterWhereInput!]
+}
+
+input NewsletterWhereUniqueInput {
+  id: ID
 }
 
 interface Node {
@@ -800,6 +1484,7 @@ type OrderItem {
   image: String!
   price: Int!
   quantity: Int!
+  itemid: ID
   user: User
 }
 
@@ -815,6 +1500,7 @@ input OrderItemCreateInput {
   image: String!
   price: Int!
   quantity: Int
+  itemid: ID
   user: UserCreateOneInput
 }
 
@@ -845,6 +1531,8 @@ enum OrderItemOrderByInput {
   price_DESC
   quantity_ASC
   quantity_DESC
+  itemid_ASC
+  itemid_DESC
 }
 
 type OrderItemPreviousValues {
@@ -856,6 +1544,7 @@ type OrderItemPreviousValues {
   image: String!
   price: Int!
   quantity: Int!
+  itemid: ID
 }
 
 input OrderItemScalarWhereInput {
@@ -947,6 +1636,20 @@ input OrderItemScalarWhereInput {
   quantity_lte: Int
   quantity_gt: Int
   quantity_gte: Int
+  itemid: ID
+  itemid_not: ID
+  itemid_in: [ID!]
+  itemid_not_in: [ID!]
+  itemid_lt: ID
+  itemid_lte: ID
+  itemid_gt: ID
+  itemid_gte: ID
+  itemid_contains: ID
+  itemid_not_contains: ID
+  itemid_starts_with: ID
+  itemid_not_starts_with: ID
+  itemid_ends_with: ID
+  itemid_not_ends_with: ID
   AND: [OrderItemScalarWhereInput!]
   OR: [OrderItemScalarWhereInput!]
   NOT: [OrderItemScalarWhereInput!]
@@ -976,6 +1679,7 @@ input OrderItemUpdateDataInput {
   image: String
   price: Int
   quantity: Int
+  itemid: ID
   user: UserUpdateOneInput
 }
 
@@ -985,6 +1689,7 @@ input OrderItemUpdateInput {
   image: String
   price: Int
   quantity: Int
+  itemid: ID
   user: UserUpdateOneInput
 }
 
@@ -994,6 +1699,7 @@ input OrderItemUpdateManyDataInput {
   image: String
   price: Int
   quantity: Int
+  itemid: ID
 }
 
 input OrderItemUpdateManyInput {
@@ -1014,6 +1720,7 @@ input OrderItemUpdateManyMutationInput {
   image: String
   price: Int
   quantity: Int
+  itemid: ID
 }
 
 input OrderItemUpdateManyWithWhereNestedInput {
@@ -1121,6 +1828,20 @@ input OrderItemWhereInput {
   quantity_lte: Int
   quantity_gt: Int
   quantity_gte: Int
+  itemid: ID
+  itemid_not: ID
+  itemid_in: [ID!]
+  itemid_not_in: [ID!]
+  itemid_lt: ID
+  itemid_lte: ID
+  itemid_gt: ID
+  itemid_gte: ID
+  itemid_contains: ID
+  itemid_not_contains: ID
+  itemid_starts_with: ID
+  itemid_not_starts_with: ID
+  itemid_ends_with: ID
+  itemid_not_ends_with: ID
   user: UserWhereInput
   AND: [OrderItemWhereInput!]
   OR: [OrderItemWhereInput!]
@@ -1261,15 +1982,24 @@ enum Permission {
 }
 
 type Query {
+  blog(where: BlogWhereUniqueInput!): Blog
+  blogs(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blog]!
+  blogsConnection(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlogConnection!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  contact(where: ContactWhereUniqueInput!): Contact
+  contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact]!
+  contactsConnection(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContactConnection!
   item(where: ItemWhereUniqueInput!): Item
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  newsletter(where: NewsletterWhereUniqueInput!): Newsletter
+  newsletters(where: NewsletterWhereInput, orderBy: NewsletterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Newsletter]!
+  newslettersConnection(where: NewsletterWhereInput, orderBy: NewsletterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NewsletterConnection!
   order(where: OrderWhereUniqueInput!): Order
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
@@ -1283,9 +2013,12 @@ type Query {
 }
 
 type Subscription {
+  blog(where: BlogSubscriptionWhereInput): BlogSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  newsletter(where: NewsletterSubscriptionWhereInput): NewsletterSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload

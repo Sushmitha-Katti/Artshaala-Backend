@@ -17,17 +17,29 @@ type User {
 }
 
 type CartItem {
-    id: ID!@id
-  quantity: Int! @default(value: 1)
-  item: Item # relationship to Item
-  user: User! # relationship to User
+    id: ID! @id
+    quantity: Int! @default(value: 1)
+    item: Item # relationship to Item
+    user: User! # relationship to User
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+}
+
+type Blog {
+  id: ID! @id
+  title: String!
+  author: String!
+  summery: String!
+  image: String!
+  headers: String!
+  description: String!
+  user: User!
   createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
 }
 
 
 type Comment {
-    id: ID!@id
+  id: ID!@id
   comment: String
   rating: Float
   item:Item!
@@ -45,7 +57,7 @@ type Item {
   specification: String!
   images: [String] @scalarList(strategy: RELATION)
   description:String!
-  #comment: [Comment]
+  comment: [Comment]
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   price: Int!
@@ -55,7 +67,7 @@ type Item {
 
 
 type Order {
-    id: ID!@id
+  id: ID!@id
   items: [OrderItem!]!
   total: Int!
   user: User!
@@ -65,7 +77,7 @@ type Order {
 }
 
 type OrderItem {
-    id: ID!@id
+  id: ID!@id
   title: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -73,5 +85,21 @@ type OrderItem {
   image: String!
   price: Int!
   quantity: Int! @default(value: 1)
+  itemid:ID
   user: User
+}
+
+
+type Newsletter{
+  id: ID! @id
+  email: String!
+}
+type Contact{
+  id: ID! @id
+  email: String!
+  phone: String!
+  subject: String!
+  message: String!
+  name: String!
+
 }

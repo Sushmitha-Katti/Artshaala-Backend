@@ -5,8 +5,42 @@ const { promisify } = require("util");
 const { transport, makeANiceEmail } = require("../mail");
 //const { hasPermission } = require("../utils");
 //const stripe = require("../stripe");
+const Razorpay = require("razorpay");
+
+const instance = new Razorpay({
+  key_id: process.env.RAZOR_PAY_KEY,
+  key_secret: process.env.RAZOR_PAY_SECRET
+});
 
 const Mutations = {
+  //---------------------------------for Creating Contact--------------------------------------------
+  async createContact(parent, args, ctx, info){
+    const contactinfo = await ctx.db.mutation.createContact(
+      {
+        data:{
+          ...args,
+        }
+      },
+      info
+    );
+    return contactinfo;
+
+  },
+
+  //----------------------------------Newsletter-----------------------------------------
+  async createNewsletter(parent, args, ctx, info){
+    const newsletter = await ctx.db.mutation.createNewsletter(
+      {
+        data:{
+          ...args,
+        }
+      },
+      info
+    );
+    return newsletter;
+
+  },
+
   //--------------------------------- for creating new item-------------------------------
   async createItem(parent, args, ctx, info) {
     console.log(ctx.request.userId);
@@ -17,8 +51,7 @@ const Mutations = {
     console.log(args)
     //const images= createitem.imagew;
     delete createitem.images
-    console.log("******************")
-    console.log(createitem)
+    
     //console.log(images)
 
     const item = await ctx.db.mutation.createItem(
@@ -252,6 +285,7 @@ const Mutations = {
       const orderItem = {
         ...cartItem.item,
         quantity: cartItem.quantity,
+        itemid:cartItem.item.id,
         user: { connect: { id: userId } }
       };
       delete orderItem.id;
@@ -346,46 +380,87 @@ const Mutations = {
   },
 
    //---------------------------------------- for creating Comment---------------------------------------------------------
-//    async createComment(parent, args, ctx, info) {
-//     //console.log(ctx.request.userId);
-//     if (!ctx.request.userId) {
-//       throw new Error("You must be logged in to do that!");
-//     }
+   async createComment(parent, args, ctx, info) {
+    //console.log(ctx.request.userId);
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
     
-//     //const images= createitem.imagew;
-//     //delete createitem.images
-//     //console.log("******************")
-//     //console.log(createitem)
-//     //console.log(images)
-//     const comment = { ...args };
-//     // remove the ID from the updates
-//     delete comment.itemid;
-
-//     const comment = await ctx.db.mutation.createComment(
-//       {
-//         data: {
-//           ...comment,
-//           // to create a relationship between the Item and the User
-//           user: {
-//             connect: {
-//               id: ctx.request.userId,
-//             },
-//           },
-//           item:{
-//             connect:{
-//               id: args.itemid,
-//             }
-//           },
+    //const images= createitem.imagew;
+    //delete createitem.images
+    //console.log("******************")
+    //console.log(createitem)
+    //console.log(images)
+    const review = { ...args };
+    // remove the ID from the updates
+    
+    delete review.itemid;
+    console.log(review)
+    const comment = await ctx.db.mutation.updateItem(
+      {
+        where: { id: args.itemid },
+        data:{
+        
+          comment: {
+            create:{
+            ...review,
+            user: {
+                   connect: {
+                     id: ctx.request.userId,
+                   },
+                 },
+                
+                }
+              }
+        }
+      },info);
+        // data: {
+        //   ...review,
+        //   // to create a relationship between the Item and the User
+        //   user: {
+        //     connect: {
+        //       id: ctx.request.userId,
+        //     },
+        //   },
+        //   item:{
+        //     connect:{
+        //       id: args.itemid,
+        //     }
+        //   },
           
-//         }
-//       },
-//       info
-//     );
+        // }
+    //   },
+    //   info
+    // );
 
-//     console.log(comment);
+    console.log(comment);
 
-//     return comment;
-//   },
+    return comment;
+  },
+
+  async createBlog(parent, args, ctx, info){
+    const item = await ctx.db.mutation.createBlog({
+      data: {
+        ...args,
+        user:{
+          connect: {
+            id: ctx.request.userId,
+          },
+        }
+        
+      }
+    }, info);
+    console.log(item)
+    return item;
+  },
+
+  async deleteBlog(parent, args, ctx, info){
+    const where = { id: args.id };
+    const deletedBlog = await ctx.db.mutation.deleteBlog({ where }, info);
+    return deletedBlog;
+  }
 };
+
+
 
 module.exports = Mutations;
