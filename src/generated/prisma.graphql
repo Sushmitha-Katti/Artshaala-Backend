@@ -1,3 +1,276 @@
+type Address {
+  id: ID!
+  mobile: String!
+  pincode: String!
+  addressline1: String!
+  addressline2: String
+  landmark: String
+  city: String!
+  state: String!
+  user: User!
+}
+
+type AddressConnection {
+  pageInfo: PageInfo!
+  edges: [AddressEdge]!
+  aggregate: AggregateAddress!
+}
+
+input AddressCreateInput {
+  mobile: String!
+  pincode: String!
+  addressline1: String!
+  addressline2: String
+  landmark: String
+  city: String!
+  state: String!
+  user: UserCreateOneWithoutAddressInput!
+}
+
+input AddressCreateOneWithoutUserInput {
+  create: AddressCreateWithoutUserInput
+  connect: AddressWhereUniqueInput
+}
+
+input AddressCreateWithoutUserInput {
+  mobile: String!
+  pincode: String!
+  addressline1: String!
+  addressline2: String
+  landmark: String
+  city: String!
+  state: String!
+}
+
+type AddressEdge {
+  node: Address!
+  cursor: String!
+}
+
+enum AddressOrderByInput {
+  id_ASC
+  id_DESC
+  mobile_ASC
+  mobile_DESC
+  pincode_ASC
+  pincode_DESC
+  addressline1_ASC
+  addressline1_DESC
+  addressline2_ASC
+  addressline2_DESC
+  landmark_ASC
+  landmark_DESC
+  city_ASC
+  city_DESC
+  state_ASC
+  state_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AddressPreviousValues {
+  id: ID!
+  mobile: String!
+  pincode: String!
+  addressline1: String!
+  addressline2: String
+  landmark: String
+  city: String!
+  state: String!
+}
+
+type AddressSubscriptionPayload {
+  mutation: MutationType!
+  node: Address
+  updatedFields: [String!]
+  previousValues: AddressPreviousValues
+}
+
+input AddressSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AddressWhereInput
+  AND: [AddressSubscriptionWhereInput!]
+  OR: [AddressSubscriptionWhereInput!]
+  NOT: [AddressSubscriptionWhereInput!]
+}
+
+input AddressUpdateInput {
+  mobile: String
+  pincode: String
+  addressline1: String
+  addressline2: String
+  landmark: String
+  city: String
+  state: String
+  user: UserUpdateOneRequiredWithoutAddressInput
+}
+
+input AddressUpdateManyMutationInput {
+  mobile: String
+  pincode: String
+  addressline1: String
+  addressline2: String
+  landmark: String
+  city: String
+  state: String
+}
+
+input AddressUpdateOneWithoutUserInput {
+  create: AddressCreateWithoutUserInput
+  update: AddressUpdateWithoutUserDataInput
+  upsert: AddressUpsertWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AddressWhereUniqueInput
+}
+
+input AddressUpdateWithoutUserDataInput {
+  mobile: String
+  pincode: String
+  addressline1: String
+  addressline2: String
+  landmark: String
+  city: String
+  state: String
+}
+
+input AddressUpsertWithoutUserInput {
+  update: AddressUpdateWithoutUserDataInput!
+  create: AddressCreateWithoutUserInput!
+}
+
+input AddressWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  mobile: String
+  mobile_not: String
+  mobile_in: [String!]
+  mobile_not_in: [String!]
+  mobile_lt: String
+  mobile_lte: String
+  mobile_gt: String
+  mobile_gte: String
+  mobile_contains: String
+  mobile_not_contains: String
+  mobile_starts_with: String
+  mobile_not_starts_with: String
+  mobile_ends_with: String
+  mobile_not_ends_with: String
+  pincode: String
+  pincode_not: String
+  pincode_in: [String!]
+  pincode_not_in: [String!]
+  pincode_lt: String
+  pincode_lte: String
+  pincode_gt: String
+  pincode_gte: String
+  pincode_contains: String
+  pincode_not_contains: String
+  pincode_starts_with: String
+  pincode_not_starts_with: String
+  pincode_ends_with: String
+  pincode_not_ends_with: String
+  addressline1: String
+  addressline1_not: String
+  addressline1_in: [String!]
+  addressline1_not_in: [String!]
+  addressline1_lt: String
+  addressline1_lte: String
+  addressline1_gt: String
+  addressline1_gte: String
+  addressline1_contains: String
+  addressline1_not_contains: String
+  addressline1_starts_with: String
+  addressline1_not_starts_with: String
+  addressline1_ends_with: String
+  addressline1_not_ends_with: String
+  addressline2: String
+  addressline2_not: String
+  addressline2_in: [String!]
+  addressline2_not_in: [String!]
+  addressline2_lt: String
+  addressline2_lte: String
+  addressline2_gt: String
+  addressline2_gte: String
+  addressline2_contains: String
+  addressline2_not_contains: String
+  addressline2_starts_with: String
+  addressline2_not_starts_with: String
+  addressline2_ends_with: String
+  addressline2_not_ends_with: String
+  landmark: String
+  landmark_not: String
+  landmark_in: [String!]
+  landmark_not_in: [String!]
+  landmark_lt: String
+  landmark_lte: String
+  landmark_gt: String
+  landmark_gte: String
+  landmark_contains: String
+  landmark_not_contains: String
+  landmark_starts_with: String
+  landmark_not_starts_with: String
+  landmark_ends_with: String
+  landmark_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  state: String
+  state_not: String
+  state_in: [String!]
+  state_not_in: [String!]
+  state_lt: String
+  state_lte: String
+  state_gt: String
+  state_gte: String
+  state_contains: String
+  state_not_contains: String
+  state_starts_with: String
+  state_not_starts_with: String
+  state_ends_with: String
+  state_not_ends_with: String
+  user: UserWhereInput
+  AND: [AddressWhereInput!]
+  OR: [AddressWhereInput!]
+  NOT: [AddressWhereInput!]
+}
+
+input AddressWhereUniqueInput {
+  id: ID
+}
+
+type AggregateAddress {
+  count: Int!
+}
+
 type AggregateBlog {
   count: Int!
 }
@@ -1280,7 +1553,18 @@ input ItemWhereUniqueInput {
 
 scalar Long
 
+enum Mode {
+  OFFLINE
+  ONLINE
+}
+
 type Mutation {
+  createAddress(data: AddressCreateInput!): Address!
+  updateAddress(data: AddressUpdateInput!, where: AddressWhereUniqueInput!): Address
+  updateManyAddresses(data: AddressUpdateManyMutationInput!, where: AddressWhereInput): BatchPayload!
+  upsertAddress(where: AddressWhereUniqueInput!, create: AddressCreateInput!, update: AddressUpdateInput!): Address!
+  deleteAddress(where: AddressWhereUniqueInput!): Address
+  deleteManyAddresses(where: AddressWhereInput): BatchPayload!
   createBlog(data: BlogCreateInput!): Blog!
   updateBlog(data: BlogUpdateInput!, where: BlogWhereUniqueInput!): Blog
   updateManyBlogs(data: BlogUpdateManyMutationInput!, where: BlogWhereInput): BatchPayload!
@@ -1455,6 +1739,8 @@ type Order {
   charge: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  status: Status!
+  paymentmode: Mode!
 }
 
 type OrderConnection {
@@ -1468,6 +1754,8 @@ input OrderCreateInput {
   total: Int!
   user: UserCreateOneInput!
   charge: String!
+  status: Status
+  paymentmode: Mode
 }
 
 type OrderEdge {
@@ -1863,6 +2151,10 @@ enum OrderOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  status_ASC
+  status_DESC
+  paymentmode_ASC
+  paymentmode_DESC
 }
 
 type OrderPreviousValues {
@@ -1871,6 +2163,8 @@ type OrderPreviousValues {
   charge: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  status: Status!
+  paymentmode: Mode!
 }
 
 type OrderSubscriptionPayload {
@@ -1896,11 +2190,15 @@ input OrderUpdateInput {
   total: Int
   user: UserUpdateOneRequiredInput
   charge: String
+  status: Status
+  paymentmode: Mode
 }
 
 input OrderUpdateManyMutationInput {
   total: Int
   charge: String
+  status: Status
+  paymentmode: Mode
 }
 
 input OrderWhereInput {
@@ -1960,6 +2258,14 @@ input OrderWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  status: Status
+  status_not: Status
+  status_in: [Status!]
+  status_not_in: [Status!]
+  paymentmode: Mode
+  paymentmode_not: Mode
+  paymentmode_in: [Mode!]
+  paymentmode_not_in: [Mode!]
   AND: [OrderWhereInput!]
   OR: [OrderWhereInput!]
   NOT: [OrderWhereInput!]
@@ -1982,6 +2288,9 @@ enum Permission {
 }
 
 type Query {
+  address(where: AddressWhereUniqueInput!): Address
+  addresses(where: AddressWhereInput, orderBy: AddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Address]!
+  addressesConnection(where: AddressWhereInput, orderBy: AddressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AddressConnection!
   blog(where: BlogWhereUniqueInput!): Blog
   blogs(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blog]!
   blogsConnection(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlogConnection!
@@ -2012,7 +2321,13 @@ type Query {
   node(id: ID!): Node
 }
 
+enum Status {
+  DELIVERED
+  PENDING
+}
+
 type Subscription {
+  address(where: AddressSubscriptionWhereInput): AddressSubscriptionPayload
   blog(where: BlogSubscriptionWhereInput): BlogSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
@@ -2035,6 +2350,7 @@ type User {
   cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
   createdAt: DateTime!
   updatedAt: DateTime!
+  address: Address
 }
 
 type UserConnection {
@@ -2051,10 +2367,16 @@ input UserCreateInput {
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   cart: CartItemCreateManyWithoutUserInput
+  address: AddressCreateOneWithoutUserInput
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutAddressInput {
+  create: UserCreateWithoutAddressInput
   connect: UserWhereUniqueInput
 }
 
@@ -2067,6 +2389,16 @@ input UserCreatepermissionsInput {
   set: [Permission!]
 }
 
+input UserCreateWithoutAddressInput {
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+}
+
 input UserCreateWithoutCartInput {
   name: String!
   email: String!
@@ -2074,6 +2406,7 @@ input UserCreateWithoutCartInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
+  address: AddressCreateOneWithoutUserInput
 }
 
 type UserEdge {
@@ -2138,6 +2471,7 @@ input UserUpdateDataInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   cart: CartItemUpdateManyWithoutUserInput
+  address: AddressUpdateOneWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -2148,6 +2482,7 @@ input UserUpdateInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   cart: CartItemUpdateManyWithoutUserInput
+  address: AddressUpdateOneWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -2175,6 +2510,13 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutAddressInput {
+  create: UserCreateWithoutAddressInput
+  update: UserUpdateWithoutAddressDataInput
+  upsert: UserUpsertWithoutAddressInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutCartInput {
   create: UserCreateWithoutCartInput
   update: UserUpdateWithoutCartDataInput
@@ -2186,6 +2528,16 @@ input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
+input UserUpdateWithoutAddressDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+}
+
 input UserUpdateWithoutCartDataInput {
   name: String
   email: String
@@ -2193,11 +2545,17 @@ input UserUpdateWithoutCartDataInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  address: AddressUpdateOneWithoutUserInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutAddressInput {
+  update: UserUpdateWithoutAddressDataInput!
+  create: UserCreateWithoutAddressInput!
 }
 
 input UserUpsertWithoutCartInput {
@@ -2303,6 +2661,7 @@ input UserWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  address: AddressWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

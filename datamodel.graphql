@@ -2,9 +2,17 @@ enum Permission {
   ADMIN
   USER
 }
+enum Status {
+  DELIVERED
+  PENDING
+}
+enum Mode {
+  OFFLINE
+  ONLINE
+}
 
 type User {
-    id: ID!@id
+  id: ID!@id
   name: String!
   email: String!  @unique
   password: String!
@@ -14,6 +22,7 @@ type User {
   cart: [CartItem!]!@scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  address:Address
 }
 
 type CartItem {
@@ -43,7 +52,7 @@ type Comment {
   comment: String
   rating: Float
   item:Item!
-  user:User!
+  user:User! @relation(link: TABLE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -74,6 +83,9 @@ type Order {
   charge: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  status: Status! @default(value: PENDING )
+  paymentmode: Mode! @default(value: OFFLINE )
+ 
 }
 
 type OrderItem {
@@ -86,6 +98,7 @@ type OrderItem {
   price: Int!
   quantity: Int! @default(value: 1)
   itemid:ID
+  
   user: User
 }
 
@@ -101,5 +114,18 @@ type Contact{
   subject: String!
   message: String!
   name: String!
+
+}
+
+type Address{
+  id: ID! @id
+  mobile: String!
+  pincode: String!
+  addressline1: String!
+  addressline2: String
+  landmark: String
+  city: String!
+  state: String!
+  user: User! @relation(link: TABLE)
 
 }
