@@ -3,12 +3,22 @@
 type SuccessMessage {
   message: String
 }
-
+enum Status {
+  DELIVERED
+  PENDING
+}
+enum Mode {
+  OFFLINE
+  ONLINE
+}
 
 type Mutation {
   createItem(title: String!,description: String, specification: String!, category: String ,brand:String, type: String, price: Int!,stock:Int, size:String, images: [String] ): Item!
-  updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  
+  updateItem(id: ID!, title: String,description: String, specification: String, category: String ,brand:String, type: String, price: Int,stock:Int, size:String): Item!
   deleteItem(id: ID!): Item
+  updateAddress(id: ID!,mobile:String,pincode:String, addressline1:String!, addressline2:String, landmark:String, city: String!, state:String!): Address
+  createaAddress(mobile:String,pincode:String, addressline1:String!, addressline2:String, landmark:String, city: String!, state:String!): Address!
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
@@ -24,6 +34,8 @@ type Mutation {
   deleteBlog(id: ID!): Blog
   createNewsletter(email:String!): Newsletter!
   createContact(email:String!, name:String!, phone: String!, message: String!, subject: String!): Contact!
+  deleteContact(id: ID!): Contact!
+  updateorders(id:ID!, status:Status): Order!
 }
 
 type Query {
@@ -33,12 +45,17 @@ type Query {
   me: User
   users: [User]!
   order(id: ID!): Order
-  orders(orderBy: OrderOrderByInput): [Order]!
+  orders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
   comments(where: CommentWhereInput):[Comment]
   commentsConnection(where: CommentWhereInput,orderBy: CommentOrderByInput,skip: Int,after: String,before: String,first: Int,last: Int):CommentConnection!
   blogs(orderBy: BlogOrderByInput): [Blog]!
   blog(id: ID!): Blog
   newsletters(where: NewsletterWhereInput): [Newsletter]
+  contacts(where:ContactWhereInput): [Contact]
+  address(where: AddressWhereUniqueInput!): Address
+  addresses(where: AddressWhereInput): [Address]
+  adminorders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
+ 
 }
 
 type User{

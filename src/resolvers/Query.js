@@ -5,6 +5,40 @@ const Query = {
   commentsConnection: forwardTo("db"),
   itemsConnection: forwardTo("db"),
   blogs: forwardTo("db"),
+  address: forwardTo("db"),
+  addresses: forwardTo("db"),
+  newsletters: forwardTo("db"), 
+
+
+
+  async  adminorders(parent, args, ctx, info){
+
+    const { userId } = ctx.request;
+    console.log(userId)
+    // check if he is a admin or not
+    if (!userId) {
+    throw new Error("You must be signed in soooon");
+  }
+
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+    if ( !hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+    const pendingaddress = await ctx.db.query.orders(
+      {
+        where:{ status:"PENDING"}
+      },
+      info
+
+    );
+    return pendingaddress;
+
+  
+  
+
+  },
   
   async blog(parent, args, ctx, info){
     const blog = await ctx.db.query.blog(
@@ -15,7 +49,7 @@ const Query = {
     );
     return blog;
   },
-  newsletters: forwardTo("db"),  
+ 
 
   async comments(parent, args, ctx, info) {    
     
@@ -56,6 +90,34 @@ const Query = {
   },
 
 
+
+  async contacts(parent, args, ctx, info){
+
+     // 1. Make sure they are logged in
+     if (!ctx.request.userId) {
+      throw new Error("You arent logged in!");
+    }
+      // 2. Query contacts
+      const contacts = await ctx.db.query.contacts(
+        {
+          
+        },
+        info
+      );
+      
+      //if the user is admin
+      const hasPermissionToSeeOrder = ctx.request.user.permissions.includes(
+        "ADMIN"
+      );
+      if (!hasPermissionToSeeOrder) {
+        throw new Error("You cant see this buddd");
+      }
+      // 4. Return the order
+    return contacts;
+
+  },
+
+
   async order(parent, args, ctx, info) {
     // 1. Make sure they are logged in
     if (!ctx.request.userId) {
@@ -70,9 +132,7 @@ const Query = {
     );
     // 3. Check if the have the permissions to see this order
     const ownsOrder = order.user.id === ctx.request.userId;
-    const hasPermissionToSeeOrder = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
+  
     if (!ownsOrder && !hasPermissionToSeeOrder) {
       throw new Error("You cant see this buddd");
     }
@@ -96,4 +156,5 @@ const Query = {
   },
   
 };
+
 module.exports = Query;

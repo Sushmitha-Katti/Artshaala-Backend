@@ -40,8 +40,53 @@ const Mutations = {
     return newsletter;
 
   },
+//--------------------------------------Create Adress-------------------------------------------------------
+async createaAddress(parent, args, ctx, info) {
+  // 1. Make sure they are signed in
+  const { userId } = ctx.request;
+  if (!userId) {
+    throw new Error("You must be signed in soooon");
+  }
+  
+  // 2. Query the users current cart
+  const [existingAddress] = await ctx.db.query.addresses({
+    where: {
+      user: { id: userId },
+     
+    }
+  });
+  // 3. Check if that item is already in their cart and increment by 1 if it is
+  if (existingAddress) {
+    const updates = { ...args };
+    delete updates.id;
+    console.log("This item is already in their cart");
+    return ctx.db.mutation.updateAddress(
+      {
+        where: { id: existingAddress.id },
+        data: { ...updates }
+      },
+      info
+    );
+  }
+  // 4. If its not, create a fresh CartItem for that user!
+  return ctx.db.mutation.createAddress(
+    {
+      data: {
+        user: {
+          connect: { id: userId }
+        },
+        ...args
+      
+      }
+      
+    },
+    info
+  );
+},
 
-  //--------------------------------- for creating new item-------------------------------
+
+
+  //--------------------------------- for creating new item-------------------------------------------------
   async createItem(parent, args, ctx, info) {
     console.log(ctx.request.userId);
     if (!ctx.request.userId) {
@@ -72,7 +117,7 @@ const Mutations = {
 
     return item;
   },
-  //--------------------------------------Update New Item----------------------------------------------------
+  //--------------------------------------Update Item--------------------------------------------------------------
   updateItem(parent, args, ctx, info) {
 
     //Check whether they are logged in or not
@@ -83,6 +128,16 @@ const Mutations = {
     const updates = { ...args };
     // remove the ID from the updates
     delete updates.id;
+    //Check if he is a admin or not
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+      
+  
+      if ( !hasPermissions) {
+        throw new Error("You don't have permission to do that!");
+      }
+  
     // run the update method
     return ctx.db.mutation.updateItem(
       {
@@ -116,18 +171,41 @@ const Mutations = {
     );
   },
 
+  //-------------------------------------------DeleteContact-------------------------------------------------------------
+
+  async deleteContact(parent, args, ctx, info) {
+    console.log("---------------------------");
+    console.log(args);
+    const where = { id: args.id };
+    // 1. find the item
+    const item = await ctx.db.query.contacts({ where }, `{ id  name email message subject}`);
+    // 2. Check if they own that item, or have the permissions
+   console.log(where);
+   const hasPermissions = ctx.request.user.permissions.includes(
+    "ADMIN"
+  );
+    
+
+    if ( !hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+
+    // 3. Delete it!
+    return ctx.db.mutation.deleteContact({ where }, info);
+  },
+
 //-------------------------------------------deleteItem------------------------------------------------------------------
   async deleteItem(parent, args, ctx, info) {
     const where = { id: args.id };
     // 1. find the item
-    const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
+    const item = await ctx.db.query.item({ where }, `{ id title }`);
     // 2. Check if they own that item, or have the permissions
-    const ownsItem = item.user.id === ctx.request.userId;
-    const hasPermissions = ctx.request.user.permissions.some(permission =>
-      ["ADMIN", "ITEMDELETE"].includes(permission)
+  
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
     );
 
-    if (!ownsItem && !hasPermissions) {
+    if (!hasPermissions) {
       throw new Error("You don't have permission to do that!");
     }
 
@@ -333,7 +411,7 @@ const Mutations = {
       info
     );
   },
-  //------------------------------------------Remove from cart---------------
+  //------------------------------------------Remove from cart---------------------------------------------------
   async removeFromCart(parent, args, ctx, info) {
     // 1. Find the cart item
     const cartItem = await ctx.db.query.cartItem(
@@ -417,7 +495,7 @@ const Mutations = {
 
     return comment;
   },
-
+//-----------------------------------------------Create Blog ------------------------------------------------------
   async createBlog(parent, args, ctx, info){
     const item = await ctx.db.mutation.createBlog({
       data: {
@@ -433,7 +511,7 @@ const Mutations = {
     console.log(item)
     return item;
   },
-
+//-----------------------------------------------Delete Blog----------------------------------------------------
   async deleteBlog(parent, args, ctx, info){
     const where = { id: args.id };
     const deletedBlog = await ctx.db.mutation.deleteBlog({ where }, info);
