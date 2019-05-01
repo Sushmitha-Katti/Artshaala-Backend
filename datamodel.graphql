@@ -11,6 +11,10 @@ enum Mode {
   ONLINE
 }
 
+enum ContactStatus {
+  DONE
+  PENDING
+}
 type User {
   id: ID!@id
   name: String!
@@ -114,6 +118,7 @@ type Contact{
   subject: String!
   message: String!
   name: String!
+  status: ContactStatus! @default(value: PENDING )
 
 }
 

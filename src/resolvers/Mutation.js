@@ -47,19 +47,20 @@ async createaAddress(parent, args, ctx, info) {
   if (!userId) {
     throw new Error("You must be signed in soooon");
   }
+
   
-  // 2. Query the users current cart
+  // 2. Query the users current address
   const [existingAddress] = await ctx.db.query.addresses({
     where: {
       user: { id: userId },
      
     }
   });
-  // 3. Check if that item is already in their cart and increment by 1 if it is
+  // 3. Check if the address already exists.If so update the same address.
   if (existingAddress) {
     const updates = { ...args };
     delete updates.id;
-    console.log("This item is already in their cart");
+   
     return ctx.db.mutation.updateAddress(
       {
         where: { id: existingAddress.id },
@@ -68,7 +69,7 @@ async createaAddress(parent, args, ctx, info) {
       info
     );
   }
-  // 4. If its not, create a fresh CartItem for that user!
+  // 4. If its not, create a new Address for that user!
   return ctx.db.mutation.createAddress(
     {
       data: {
@@ -86,14 +87,24 @@ async createaAddress(parent, args, ctx, info) {
 
 
 
-  //--------------------------------- for creating new item-------------------------------------------------
+  //--------------------------------- for creating new item----------------------------------------------------
+
   async createItem(parent, args, ctx, info) {
     console.log(ctx.request.userId);
     if (!ctx.request.userId) {
       throw new Error("You must be logged in to do that!");
     }
+
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+
+    if (!hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+
     const createitem = {...args};
-    console.log(args)
+   
     //const images= createitem.imagew;
     delete createitem.images
     
@@ -113,7 +124,7 @@ async createaAddress(parent, args, ctx, info) {
       info
     );
 
-    console.log(item);
+   
 
     return item;
   },
@@ -124,6 +135,16 @@ async createaAddress(parent, args, ctx, info) {
     if (!ctx.request.userId) {
       throw new Error("You must be logged in to do that!");
     }
+
+    //check if the user has the permision to do that
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+
+    if (!hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+
     // first take a copy of the updates
     const updates = { ...args };
     // remove the ID from the updates
@@ -151,14 +172,19 @@ async createaAddress(parent, args, ctx, info) {
   },
   //-------------------------------------------Upadate Cart Item---------------------------------------------------------
   updateCart(parent, args, ctx, info) {
+
+
+     //Check whether they are logged in or not
+     if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
     // first take a copy of the updates
     const updates = { ...args };
    
     // remove the ID from the updates
-   console.log('---------------')
-   console.log(updates)
+  
     delete updates.id;
-    console.log(args.id)
+   
     // run the update method
     return ctx.db.mutation.updateCartItem(
       {
@@ -171,12 +197,12 @@ async createaAddress(parent, args, ctx, info) {
     );
   },
 
-  //-------------------------------------------DeleteContact-------------------------------------------------------------
+  //-------------------------------------------Update Contact-------------------------------------------------------------
 
-  async deleteContact(parent, args, ctx, info) {
-    console.log("---------------------------");
+  async updateContact(parent, args, ctx, info) {
+    console.log("---------------------------");             //todo update contact
     console.log(args);
-    const where = { id: args.id };
+    const where = { id: args.id };                       ////////////////////////////////////////////
     // 1. find the item
     const item = await ctx.db.query.contacts({ where }, `{ id  name email message subject}`);
     // 2. Check if they own that item, or have the permissions
@@ -185,17 +211,41 @@ async createaAddress(parent, args, ctx, info) {
     "ADMIN"
   );
     
-
     if ( !hasPermissions) {
       throw new Error("You don't have permission to do that!");
     }
+    
+   // run the update status
+   return ctx.db.mutation.updateContact(
+    {
+      data: {
+        status:"DONE"
+      },
+      where: {
+        id: args.id
+      }
+    },
+    info
+  );
 
-    // 3. Delete it!
-    return ctx.db.mutation.deleteContact({ where }, info);
   },
 
 //-------------------------------------------deleteItem------------------------------------------------------------------
   async deleteItem(parent, args, ctx, info) {
+
+     //Check whether they are logged in or not
+     if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
+
+    //check if the user has the permision to do that
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+
+    if (!hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
     const where = { id: args.id };
     // 1. find the item
     const item = await ctx.db.query.item({ where }, `{ id title }`);
@@ -386,7 +436,7 @@ async createaAddress(parent, args, ctx, info) {
     });
     // 3. Check if that item is already in their cart and increment by 1 if it is
     if (existingCartItem) {
-      console.log("This item is already in their cart");
+     
       return ctx.db.mutation.updateCartItem(
         {
           where: { id: existingCartItem.id },
@@ -414,6 +464,12 @@ async createaAddress(parent, args, ctx, info) {
   //------------------------------------------Remove from cart---------------------------------------------------
   async removeFromCart(parent, args, ctx, info) {
     // 1. Find the cart item
+     //Check whether they are logged in or not
+     if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
+
+    
     const cartItem = await ctx.db.query.cartItem(
       {
         where: {
@@ -444,11 +500,7 @@ async createaAddress(parent, args, ctx, info) {
       throw new Error("You must be logged in to do that!");
     }
     
-    //const images= createitem.imagew;
-    //delete createitem.images
-    //console.log("******************")
-    //console.log(createitem)
-    //console.log(images)
+    
     const review = { ...args };
     // remove the ID from the updates
     
@@ -491,12 +543,26 @@ async createaAddress(parent, args, ctx, info) {
     //   info
     // );
 
-    console.log(comment);
+  
 
     return comment;
   },
 //-----------------------------------------------Create Blog ------------------------------------------------------
   async createBlog(parent, args, ctx, info){
+
+     //Check whether they are logged in or not
+     if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
+
+    //check if the user has the permision to do that
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+
+    if (!hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
     const item = await ctx.db.mutation.createBlog({
       data: {
         ...args,
@@ -513,6 +579,20 @@ async createaAddress(parent, args, ctx, info) {
   },
 //-----------------------------------------------Delete Blog----------------------------------------------------
   async deleteBlog(parent, args, ctx, info){
+
+     //Check whether they are logged in or not
+     if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
+
+    //check if the user has the permision to do that
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
+
+    if (!hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
     const where = { id: args.id };
     const deletedBlog = await ctx.db.mutation.deleteBlog({ where }, info);
     return deletedBlog;

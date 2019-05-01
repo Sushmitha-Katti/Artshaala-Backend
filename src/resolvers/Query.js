@@ -100,6 +100,7 @@ const Query = {
       // 2. Query contacts
       const contacts = await ctx.db.query.contacts(
         {
+          where: { status: "PENDING" }
           
         },
         info
@@ -120,6 +121,9 @@ const Query = {
 
   async order(parent, args, ctx, info) {
     // 1. Make sure they are logged in
+    console.log('*****************************')
+    console.log(args)
+
     if (!ctx.request.userId) {
       throw new Error("You arent logged in!");
     }
@@ -128,12 +132,15 @@ const Query = {
       {
         where: { id: args.id }
       },
-      info
+      {}
     );
     // 3. Check if the have the permissions to see this order
-    const ownsOrder = order.user.id === ctx.request.userId;
+   
+    const hasPermissions = ctx.request.user.permissions.includes(
+      "ADMIN"
+    );
   
-    if (!ownsOrder && !hasPermissionToSeeOrder) {
+    if (!ownsOrder && !hasPermissions) {
       throw new Error("You cant see this buddd");
     }
     // 4. Return the order
@@ -142,6 +149,7 @@ const Query = {
   
   async orders(parent, args, ctx, info) {
     const { userId } = ctx.request;
+    console.log(args)
     if (!userId) {
       throw new Error("you must be signed in!");
     }
@@ -155,6 +163,9 @@ const Query = {
     );
   },
   
+  
 };
+
+
 
 module.exports = Query;

@@ -34,7 +34,7 @@ type Mutation {
   deleteBlog(id: ID!): Blog
   createNewsletter(email:String!): Newsletter!
   createContact(email:String!, name:String!, phone: String!, message: String!, subject: String!): Contact!
-  deleteContact(id: ID!): Contact!
+  updateContact(id: ID!, status: ContactStatus): Contact!
   updateorders(id:ID!, status:Status): Order!
 }
 
@@ -55,7 +55,7 @@ type Query {
   address(where: AddressWhereUniqueInput!): Address
   addresses(where: AddressWhereInput): [Address]
   adminorders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
- 
+  
 }
 
 type User{

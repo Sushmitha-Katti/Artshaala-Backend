@@ -1001,6 +1001,7 @@ type Contact {
   subject: String!
   message: String!
   name: String!
+  status: ContactStatus!
 }
 
 type ContactConnection {
@@ -1015,6 +1016,7 @@ input ContactCreateInput {
   subject: String!
   message: String!
   name: String!
+  status: ContactStatus
 }
 
 type ContactEdge {
@@ -1035,6 +1037,8 @@ enum ContactOrderByInput {
   message_DESC
   name_ASC
   name_DESC
+  status_ASC
+  status_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1048,6 +1052,12 @@ type ContactPreviousValues {
   subject: String!
   message: String!
   name: String!
+  status: ContactStatus!
+}
+
+enum ContactStatus {
+  DONE
+  PENDING
 }
 
 type ContactSubscriptionPayload {
@@ -1074,6 +1084,7 @@ input ContactUpdateInput {
   subject: String
   message: String
   name: String
+  status: ContactStatus
 }
 
 input ContactUpdateManyMutationInput {
@@ -1082,6 +1093,7 @@ input ContactUpdateManyMutationInput {
   subject: String
   message: String
   name: String
+  status: ContactStatus
 }
 
 input ContactWhereInput {
@@ -1169,6 +1181,10 @@ input ContactWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  status: ContactStatus
+  status_not: ContactStatus
+  status_in: [ContactStatus!]
+  status_not_in: [ContactStatus!]
   AND: [ContactWhereInput!]
   OR: [ContactWhereInput!]
   NOT: [ContactWhereInput!]
