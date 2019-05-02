@@ -44,7 +44,7 @@ server.start(
           ? process.env.FRONTEND_URL_PROD
           : process.env.FRONTEND_URL_DEV
       ]
-    }
+    },port: 80
   },
   deets => {
     console.log(`Server is now running on port http://localhost:${deets.port}`);
