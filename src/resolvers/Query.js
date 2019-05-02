@@ -132,7 +132,7 @@ const Query = {
       {
         where: { id: args.id }
       },
-      {}
+      info
     );
     // 3. Check if the have the permissions to see this order
    
@@ -140,7 +140,7 @@ const Query = {
       "ADMIN"
     );
   
-    if (!ownsOrder && !hasPermissions) {
+    if (!hasPermissions) {
       throw new Error("You cant see this buddd");
     }
     // 4. Return the order

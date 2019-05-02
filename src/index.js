@@ -1,7 +1,9 @@
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+if(process.env.NODE_ENV !== "production"){
+  require("dotenv").config({ path: "variables.env" });
+}
 
-require("dotenv").config({ path: "variables.env" });
 const createServer = require("./createServer");
 const db = require("./db");
 
@@ -37,7 +39,11 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: process.env.FRONTEND_URL
+      origin: [
+        process.env.NODE_ENV === "production"
+          ? process.env.FRONTEND_URL_PROD
+          : process.env.FRONTEND_URL_DEV
+      ]
     }
   },
   deets => {
