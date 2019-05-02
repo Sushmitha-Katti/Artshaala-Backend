@@ -139,8 +139,12 @@ const Query = {
     const hasPermissions = ctx.request.user.permissions.includes(
       "ADMIN"
     );
+
+    const ownsOrder = order.user.id === ctx.request.userId;
+    if ( !ownsOrder &&  !hasPermissions) {
+
   
-    if (!hasPermissions) {
+
       throw new Error("You cant see this buddd");
     }
     // 4. Return the order
