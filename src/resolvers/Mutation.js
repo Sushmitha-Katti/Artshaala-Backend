@@ -484,7 +484,7 @@ async updateorder(parent, args, ctx, info) {
       delete orderItem.id;
       console.log("*************************")
       console.log(orderItem.images[0]);
-      delete orderItem.images
+    
       return orderItem;
     });
 
