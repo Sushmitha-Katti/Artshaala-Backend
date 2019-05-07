@@ -28,7 +28,7 @@ type Mutation {
   addToCart(id: ID!): CartItem
   updateCart(id:ID!, quantity: Int): CartItem 
   removeFromCart(id: ID!): CartItem
-  createOrder(token: String!): Order!
+  createOrder(token: String, mode:String!): Order!
   createComment(comment: String, rating: Float!,itemid: ID!): Comment!
   createBlog(title: String!, author: String!, summery: String!, image: String!, headers:String!, description: String!): Blog!
   deleteBlog(id: ID!): Blog

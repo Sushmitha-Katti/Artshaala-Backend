@@ -448,11 +448,10 @@ async updateorder(parent, args, ctx, info) {
       `{
       id
       name
-      email
       cart {
         id
         quantity
-        item { title price id description image largeImage }
+        item { title price id description images type category brand specification stock size  }
       }}`
     );
     // 2. recalculate the total for the price
@@ -461,29 +460,39 @@ async updateorder(parent, args, ctx, info) {
       0
     );
     console.log(`Going to charge for a total of ${amount}`);
+    console.log(args);
+    if (args.mode === 'ONLINE') {
+    console.log("HELLO")
     // 3. Create the stripe charge (turn token into $$$)
     const charge = await stripe.charges.create({
       amount,
       currency: "USD",
       source: args.token
     });
+  }
     // 4. Convert the CartItems to OrderItems
     const orderItems = user.cart.map(cartItem => {
       const orderItem = {
         ...cartItem.item,
+        images:{
+          set: cartItem.item.images
+        },
         quantity: cartItem.quantity,
         itemid:cartItem.item.id,
         user: { connect: { id: userId } }
       };
       delete orderItem.id;
+      console.log("*************************")
+      console.log(orderItem.images[0]);
+      delete orderItem.images
       return orderItem;
     });
 
     // 5. create the Order
     const order = await ctx.db.mutation.createOrder({
       data: {
-        total: charge.amount,
-        charge: charge.id,
+        total:amount,
+        charge: "2",
         items: { create: orderItems },
         user: { connect: { id: userId } }
       }
