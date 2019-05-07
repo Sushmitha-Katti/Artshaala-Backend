@@ -294,6 +294,40 @@ async updateorder(parent, args, ctx, info) {
     // 3. Delete it!
     return ctx.db.mutation.deleteItem({ where }, info);
   },
+  //----------------------------------------Cancel Order ----------------------------------------------------------
+
+  async deleteOrder(parent, args, ctx, info) {
+
+    //Check whether they are logged in or not
+    if (!ctx.request.userId) {
+     throw new Error("You must be logged in to do that!");
+   }
+
+   // query the order
+   const orderItem = await ctx.db.query.order(
+    {
+      where: {
+        id: args.id
+      }
+    },
+    `{ id, user { id }}`
+  );
+
+  //check if he the one w
+  if(ctx.request.userId != orderItem.user.id){
+    throw new Error("Sorry You cannot cance this order")
+  }
+
+
+   
+   const where = { id: args.id };
+
+ 
+
+
+   // 3. Delete it!
+   return ctx.db.mutation.deleteOrder({ where }, info);
+ },
 
   //------------------------------------------Signup--------------------------------------------------------------------
   async signup(parent, args, ctx, info) {
@@ -356,7 +390,7 @@ async updateorder(parent, args, ctx, info) {
 
 
 
-
+// ----------------------------------------------Reset Password ---------------------------------------------
   async requestReset(parent, args, ctx, info) {
     // 1. Check if this is a real user
     const user = await ctx.db.query.user({ where: { email: args.email } });
@@ -463,7 +497,7 @@ async updateorder(parent, args, ctx, info) {
     console.log(args);
     if (args.mode === 'ONLINE') {
     console.log("HELLO")
-    // 3. Create the stripe charge (turn token into $$$)
+    // 3. Create the stripe charge (turn token into $$$) //todo: Razor payment gateway!!!!!!!!!!
     const charge = await stripe.charges.create({
       amount,
       currency: "USD",
