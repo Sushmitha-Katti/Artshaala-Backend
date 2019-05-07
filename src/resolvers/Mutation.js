@@ -229,6 +229,38 @@ async createaAddress(parent, args, ctx, info) {
   );
 
   },
+//------------------------------------------update the order --------------------------------------------------------
+
+async updateorder(parent, args, ctx, info) {
+  console.log("---------------------------");             //todo update contact
+  console.log(args);
+  const where = { id: args.id };                       ////////////////////////////////////////////
+  // 1. find the item
+  const item = await ctx.db.query.orders({ where }, `{ id  status }`);
+  // 2. Check if they own that item, or have the permissions
+ console.log(where);
+ const hasPermissions = ctx.request.user.permissions.includes(
+  "ADMIN"
+);
+  
+  if ( !hasPermissions) {
+    throw new Error("You don't have permission to do that!");
+  }
+  
+ // run the update status
+ return ctx.db.mutation.updateOrder(
+  {
+    data: {
+      status: "DELIVERED"
+    },
+    where: {
+      id: args.id
+    }
+  },
+  info
+);
+
+},
 
 //-------------------------------------------deleteItem------------------------------------------------------------------
   async deleteItem(parent, args, ctx, info) {

@@ -35,7 +35,7 @@ type Mutation {
   createNewsletter(email:String!): Newsletter!
   createContact(email:String!, name:String!, phone: String!, message: String!, subject: String!): Contact!
   updateContact(id: ID!, status: ContactStatus): Contact!
-  updateorders(id:ID!, status:Status): Order!
+  updateorder(id:ID!, status:Status): Order!
 }
 
 type Query {
@@ -65,4 +65,5 @@ type User{
   permissions: [Permission!]!
   cart: [CartItem!]!
   orders: [OrderItem]
+  address:Address
 }

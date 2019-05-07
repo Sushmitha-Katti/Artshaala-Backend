@@ -28,7 +28,7 @@ const Query = {
     }
     const pendingaddress = await ctx.db.query.orders(
       {
-        where:{ status:"PENDING"}
+        where:{ status:args.status}
       },
       info
 
