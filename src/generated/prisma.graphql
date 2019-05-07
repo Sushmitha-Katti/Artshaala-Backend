@@ -1782,11 +1782,17 @@ type OrderEdge {
 type OrderItem {
   id: ID!
   title: String!
+  type: String!
+  category: String
+  brand: String
+  specification: String
+  images: [String!]!
+  description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  description: String!
-  image: String!
   price: Int!
+  stock: Int
+  size: String
   quantity: Int!
   itemid: ID
   user: User
@@ -1798,11 +1804,21 @@ type OrderItemConnection {
   aggregate: AggregateOrderItem!
 }
 
+input OrderItemCreateimagesInput {
+  set: [String!]
+}
+
 input OrderItemCreateInput {
   title: String!
+  type: String!
+  category: String
+  brand: String
+  specification: String
+  images: OrderItemCreateimagesInput
   description: String!
-  image: String!
   price: Int!
+  stock: Int
+  size: String
   quantity: Int
   itemid: ID
   user: UserCreateOneInput
@@ -1823,16 +1839,26 @@ enum OrderItemOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  type_ASC
+  type_DESC
+  category_ASC
+  category_DESC
+  brand_ASC
+  brand_DESC
+  specification_ASC
+  specification_DESC
+  description_ASC
+  description_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  description_ASC
-  description_DESC
-  image_ASC
-  image_DESC
   price_ASC
   price_DESC
+  stock_ASC
+  stock_DESC
+  size_ASC
+  size_DESC
   quantity_ASC
   quantity_DESC
   itemid_ASC
@@ -1842,11 +1868,17 @@ enum OrderItemOrderByInput {
 type OrderItemPreviousValues {
   id: ID!
   title: String!
+  type: String!
+  category: String
+  brand: String
+  specification: String
+  images: [String!]!
+  description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  description: String!
-  image: String!
   price: Int!
+  stock: Int
+  size: String
   quantity: Int!
   itemid: ID
 }
@@ -1880,6 +1912,76 @@ input OrderItemScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  brand: String
+  brand_not: String
+  brand_in: [String!]
+  brand_not_in: [String!]
+  brand_lt: String
+  brand_lte: String
+  brand_gt: String
+  brand_gte: String
+  brand_contains: String
+  brand_not_contains: String
+  brand_starts_with: String
+  brand_not_starts_with: String
+  brand_ends_with: String
+  brand_not_ends_with: String
+  specification: String
+  specification_not: String
+  specification_in: [String!]
+  specification_not_in: [String!]
+  specification_lt: String
+  specification_lte: String
+  specification_gt: String
+  specification_gte: String
+  specification_contains: String
+  specification_not_contains: String
+  specification_starts_with: String
+  specification_not_starts_with: String
+  specification_ends_with: String
+  specification_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1896,34 +1998,6 @@ input OrderItemScalarWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
   price: Int
   price_not: Int
   price_in: [Int!]
@@ -1932,6 +2006,28 @@ input OrderItemScalarWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  stock: Int
+  stock_not: Int
+  stock_in: [Int!]
+  stock_not_in: [Int!]
+  stock_lt: Int
+  stock_lte: Int
+  stock_gt: Int
+  stock_gte: Int
+  size: String
+  size_not: String
+  size_in: [String!]
+  size_not_in: [String!]
+  size_lt: String
+  size_lte: String
+  size_gt: String
+  size_gte: String
+  size_contains: String
+  size_not_contains: String
+  size_starts_with: String
+  size_not_starts_with: String
+  size_ends_with: String
+  size_not_ends_with: String
   quantity: Int
   quantity_not: Int
   quantity_in: [Int!]
@@ -1979,19 +2075,35 @@ input OrderItemSubscriptionWhereInput {
 
 input OrderItemUpdateDataInput {
   title: String
+  type: String
+  category: String
+  brand: String
+  specification: String
+  images: OrderItemUpdateimagesInput
   description: String
-  image: String
   price: Int
+  stock: Int
+  size: String
   quantity: Int
   itemid: ID
   user: UserUpdateOneInput
 }
 
+input OrderItemUpdateimagesInput {
+  set: [String!]
+}
+
 input OrderItemUpdateInput {
   title: String
+  type: String
+  category: String
+  brand: String
+  specification: String
+  images: OrderItemUpdateimagesInput
   description: String
-  image: String
   price: Int
+  stock: Int
+  size: String
   quantity: Int
   itemid: ID
   user: UserUpdateOneInput
@@ -1999,9 +2111,15 @@ input OrderItemUpdateInput {
 
 input OrderItemUpdateManyDataInput {
   title: String
+  type: String
+  category: String
+  brand: String
+  specification: String
+  images: OrderItemUpdateimagesInput
   description: String
-  image: String
   price: Int
+  stock: Int
+  size: String
   quantity: Int
   itemid: ID
 }
@@ -2020,9 +2138,15 @@ input OrderItemUpdateManyInput {
 
 input OrderItemUpdateManyMutationInput {
   title: String
+  type: String
+  category: String
+  brand: String
+  specification: String
+  images: OrderItemUpdateimagesInput
   description: String
-  image: String
   price: Int
+  stock: Int
+  size: String
   quantity: Int
   itemid: ID
 }
@@ -2072,6 +2196,76 @@ input OrderItemWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  brand: String
+  brand_not: String
+  brand_in: [String!]
+  brand_not_in: [String!]
+  brand_lt: String
+  brand_lte: String
+  brand_gt: String
+  brand_gte: String
+  brand_contains: String
+  brand_not_contains: String
+  brand_starts_with: String
+  brand_not_starts_with: String
+  brand_ends_with: String
+  brand_not_ends_with: String
+  specification: String
+  specification_not: String
+  specification_in: [String!]
+  specification_not_in: [String!]
+  specification_lt: String
+  specification_lte: String
+  specification_gt: String
+  specification_gte: String
+  specification_contains: String
+  specification_not_contains: String
+  specification_starts_with: String
+  specification_not_starts_with: String
+  specification_ends_with: String
+  specification_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -2088,34 +2282,6 @@ input OrderItemWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
   price: Int
   price_not: Int
   price_in: [Int!]
@@ -2124,6 +2290,28 @@ input OrderItemWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  stock: Int
+  stock_not: Int
+  stock_in: [Int!]
+  stock_not_in: [Int!]
+  stock_lt: Int
+  stock_lte: Int
+  stock_gt: Int
+  stock_gte: Int
+  size: String
+  size_not: String
+  size_in: [String!]
+  size_not_in: [String!]
+  size_lt: String
+  size_lte: String
+  size_gt: String
+  size_gte: String
+  size_contains: String
+  size_not_contains: String
+  size_starts_with: String
+  size_not_starts_with: String
+  size_ends_with: String
+  size_not_ends_with: String
   quantity: Int
   quantity_not: Int
   quantity_in: [Int!]
