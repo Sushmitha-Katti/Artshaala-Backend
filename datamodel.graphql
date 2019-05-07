@@ -95,11 +95,17 @@ type Order {
 type OrderItem {
   id: ID!@id
   title: String!
+  type:String!
+  category:String
+  brand:String
+  specification: String
+  images: [String] @scalarList(strategy: RELATION)
+  description:String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  description: String!
-  image: String!
   price: Int!
+  stock:Int
+  size:String
   quantity: Int! @default(value: 1)
   itemid:ID
   
