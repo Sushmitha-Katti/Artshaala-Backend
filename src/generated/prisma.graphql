@@ -1002,6 +1002,7 @@ type Contact {
   message: String!
   name: String!
   status: ContactStatus!
+  createdAt: DateTime!
 }
 
 type ContactConnection {
@@ -1053,6 +1054,7 @@ type ContactPreviousValues {
   message: String!
   name: String!
   status: ContactStatus!
+  createdAt: DateTime!
 }
 
 enum ContactStatus {
@@ -1185,6 +1187,14 @@ input ContactWhereInput {
   status_not: ContactStatus
   status_in: [ContactStatus!]
   status_not_in: [ContactStatus!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [ContactWhereInput!]
   OR: [ContactWhereInput!]
   NOT: [ContactWhereInput!]
