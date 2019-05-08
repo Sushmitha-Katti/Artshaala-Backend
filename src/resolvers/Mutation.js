@@ -496,13 +496,15 @@ async updateorder(parent, args, ctx, info) {
     console.log(`Going to charge for a total of ${amount}`);
     console.log(args);
     if (args.mode === 'ONLINE') {
-    console.log("HELLO")
-    // 3. Create the stripe charge (turn token into $$$) //todo: Razor payment gateway!!!!!!!!!!
-    const charge = await stripe.charges.create({
-      amount,
-      currency: "USD",
-      source: args.token
-    });
+    
+        const payment = await instance.payments.capture(
+          args.paymentId,
+          amount *100
+          
+
+        )
+        console.log(payment)
+      
   }
     // 4. Convert the CartItems to OrderItems
     const orderItems = user.cart.map(cartItem => {
@@ -526,7 +528,7 @@ async updateorder(parent, args, ctx, info) {
     const order = await ctx.db.mutation.createOrder({
       data: {
         total:amount,
-        charge: "2",
+        charge: args.paymentId,
         items: { create: orderItems },
         user: { connect: { id: userId } }
       }

@@ -7,7 +7,7 @@ const Query = {
   blogs: forwardTo("db"),
   address: forwardTo("db"),
   addresses: forwardTo("db"),
-  newsletters: forwardTo("db"), 
+  newsletters: forwardTo("db"),
 
 
 
@@ -100,7 +100,7 @@ const Query = {
       // 2. Query contacts
       const contacts = await ctx.db.query.contacts(
         // {
-        //   where: { status: "PENDING" }
+        //   orderBy:  createdAt_DESC 
           
         // },
         info
