@@ -500,10 +500,16 @@ async updateorder(parent, args, ctx, info) {
     
         const payment = await instance.payments.capture(
           args.paymentId,
-          amount *100
+          amount * 100
           
 
-        )
+        ).then((response) => {
+          // handle success
+          console.log('/razorpay/paymentCapture:', 'success:', 'razorpay_payment_id:', args.paymentId);
+          // NOTE to future devs/Ramesh: add anything you want to do after successful payment here
+         
+        }).catch((error) =>{console.log(error)});
+        console.log("IS IT WORKING?")
         console.log(payment)
       
   }
