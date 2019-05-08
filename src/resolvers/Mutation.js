@@ -496,6 +496,7 @@ async updateorder(parent, args, ctx, info) {
     console.log(`Going to charge for a total of ${amount}`);
     console.log(args);
     if (args.mode === 'ONLINE') {
+      console.log(args.paymentId)
     
         const payment = await instance.payments.capture(
           args.paymentId,
@@ -507,6 +508,7 @@ async updateorder(parent, args, ctx, info) {
       
   }
     // 4. Convert the CartItems to OrderItems
+    console.log("in orderItems")
     const orderItems = user.cart.map(cartItem => {
       const orderItem = {
         ...cartItem.item,
