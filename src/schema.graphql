@@ -52,7 +52,7 @@ type Query {
   blogs(orderBy: BlogOrderByInput): [Blog]!
   blog(id: ID!): Blog
   newsletters(where: NewsletterWhereInput): [Newsletter]
-  contacts(where:ContactWhereInput): [Contact]
+  contacts: [Contact]
   address(where: AddressWhereUniqueInput!): Address
   addresses(where: AddressWhereInput): [Address]
   adminorders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!

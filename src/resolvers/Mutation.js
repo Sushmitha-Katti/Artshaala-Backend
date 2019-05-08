@@ -283,13 +283,13 @@ async updateorder(parent, args, ctx, info) {
     const item = await ctx.db.query.item({ where }, `{ id title }`);
     // 2. Check if they own that item, or have the permissions
   
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
+    // const hasPermissions = ctx.request.user.permissions.includes(
+    //   "ADMIN"
+    // );
 
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
+    // if (!hasPermissions) {
+    //   throw new Error("You don't have permission to do that!");
+    // }
 
     // 3. Delete it!
     return ctx.db.mutation.deleteItem({ where }, info);

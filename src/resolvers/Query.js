@@ -99,10 +99,10 @@ const Query = {
     }
       // 2. Query contacts
       const contacts = await ctx.db.query.contacts(
-        {
-          where: { status: "PENDING" }
+        // {
+        //   where: { status: "PENDING" }
           
-        },
+        // },
         info
       );
       

@@ -125,7 +125,7 @@ type Contact{
   message: String!
   name: String!
   status: ContactStatus! @default(value: PENDING )
-
+  createdAt: DateTime! @createdAt
 }
 
 type Address{
