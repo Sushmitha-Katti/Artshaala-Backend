@@ -9,7 +9,7 @@ const Razorpay = require("razorpay");
 
 const instance = new Razorpay({
   key_id: process.env.RAZOR_PAY_KEY,
-  key_secret: process.env.RAZOR_PAY_SECRET
+  key_secret: process.env.RAZOR_PAY_SECRET,
 });
 
 const Mutations = {
@@ -489,29 +489,28 @@ async updateorder(parent, args, ctx, info) {
       }}`
     );
     // 2. recalculate the total for the price
-    const amount = user.cart.reduce(
+    var rzramount = user.cart.reduce(
       (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
       0
     );
-    console.log(`Going to charge for a total of ${amount}`);
+    
+    console.log(`Going to charge for a total of ${rzramount}`);
     console.log(args);
     if (args.mode === 'ONLINE') {
-      console.log(args.paymentId)
+      console.log(args.paymentId);
     
-        const payment = await instance.payments.capture(
+        try{const payment = await instance.payments.capture(
           args.paymentId,
-          amount * 100
-          
-
+          rzramount * 100
         ).then((response) => {
-          // handle success
-          console.log('/razorpay/paymentCapture:', 'success:', 'razorpay_payment_id:', args.paymentId);
-          // NOTE to future devs/Ramesh: add anything you want to do after successful payment here
-         
+          console.log("response from razorpay")
+          console.log(response);
         }).catch((error) =>{console.log(error)});
         console.log("IS IT WORKING?")
-        console.log(payment)
-      
+        console.log(payment)}
+        catch(err){
+          console.log(err)
+        }
   }
     // 4. Convert the CartItems to OrderItems
     console.log("in orderItems")
@@ -535,7 +534,7 @@ async updateorder(parent, args, ctx, info) {
     // 5. create the Order
     const order = await ctx.db.mutation.createOrder({
       data: {
-        total:amount,
+        total:rzramount,
         charge: args.paymentId,
         items: { create: orderItems },
         user: { connect: { id: userId } }
