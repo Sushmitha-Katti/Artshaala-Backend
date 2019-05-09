@@ -28,8 +28,10 @@ const Query = {
     }
     const pendingaddress = await ctx.db.query.orders(
       {
-        where:{ status:args.status}
+        where:{ status:args.status},
+        orderBy:  'status_DESC'
       },
+
       info
 
     );
@@ -99,10 +101,10 @@ const Query = {
     }
       // 2. Query contacts
       const contacts = await ctx.db.query.contacts(
-        // {
-        //   orderBy:  createdAt_DESC 
+        {
+           orderBy:  'createdAt_DESC'
           
-        // },
+        },
         info
       );
       
@@ -157,7 +159,8 @@ const Query = {
       {
         where: {
           user: { id: userId }
-        }
+        },
+        orderBy:  'createdAt_DESC'
       },
       info
     );

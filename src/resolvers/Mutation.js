@@ -313,11 +313,12 @@ async updateorder(parent, args, ctx, info) {
     `{ id, user { id }}`
   );
 
-  //check if he the one w
+  //check if he the one who placed the order earlier
+
   if(ctx.request.userId != orderItem.user.id){
     throw new Error("Sorry You cannot cance this order")
   }
-
+console.log(orderItem.user.id)
 
    
    const where = { id: args.id };
@@ -496,6 +497,7 @@ async updateorder(parent, args, ctx, info) {
     
     console.log(`Going to charge for a total of ${rzramount}`);
     console.log(args);
+    //if paymode mode is online
     if (args.mode === 'ONLINE') {
       console.log(args.paymentId);
     
@@ -506,12 +508,12 @@ async updateorder(parent, args, ctx, info) {
           console.log("response from razorpay")
           console.log(response);
         }).catch((error) =>{console.log(error)});
-        console.log("IS IT WORKING?")
-        console.log(payment)}
+     }
         catch(err){
           console.log(err)
         }
   }
+ 
     // 4. Convert the CartItems to OrderItems
     console.log("in orderItems")
     const orderItems = user.cart.map(cartItem => {
