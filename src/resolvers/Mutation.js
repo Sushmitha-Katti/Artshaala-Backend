@@ -415,23 +415,10 @@ console.log(orderItem.user.id)
       where: { email: args.email },
       data: { resetToken, resetTokenExpiry },
     });
-    // console.log("response",res);
-   
-
-    // 3. Email them that reset token
-    // const mailRes = await transport.sendMail({
-    //   from: 'artshaala@music.com',
-    //   to: user.email,
-    //   subject: 'Your Password Reset Token',
-    //   html: makeANiceEmail(`Your Password Reset Token is here!
-    //   \n\n
-    //   <a href="${process.env
-    //     .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
-    // });
-
+    
     var mailOptions = {
       from: 'artshaalamusicstore@gmail.com',
-      to: 'abhilash4317@gmail.com',
+      to: user.email,
       subject: 'Sending Email using Node.js',
       html: makeANiceEmail(`Your Password Reset Token is here!
       \n\n
