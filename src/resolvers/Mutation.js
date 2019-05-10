@@ -356,6 +356,12 @@ console.log(orderItem.user.id)
       },
       info
     );
+    try{
+      ctx.response.clearCookie('token')
+    }
+    catch(error){
+      console.log(error);
+    }
     // create the JWT token for them
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     // We set the jwt as a cookie on the response
@@ -379,6 +385,14 @@ console.log(orderItem.user.id)
     if (!valid) {
       throw new Error("Invalid Password!");
     }
+    try{
+      ctx.response.clearCookie('token')
+    }
+    catch (error){
+      console.log(error);
+    }
+
+    
     // 3. generate the JWT Token
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     // 4. Set the cookie with the token
@@ -510,12 +524,14 @@ console.log(orderItem.user.id)
       `{
       id
       name
+      email
       cart {
         id
         quantity
         item { title price id description images type category brand specification stock size  }
       }}`
     );
+    
     // 2. recalculate the total for the price
     var rzramount = user.cart.reduce(
       (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
@@ -569,15 +585,41 @@ console.log(orderItem.user.id)
         user: { connect: { id: userId } }
       }
     });
-    // 6. Clean up - clear the users cart, delete cartItems
+    //6. Clean up - clear the users cart, delete cartItems
     const cartItemIds = user.cart.map(cartItem => cartItem.id);
     await ctx.db.mutation.deleteManyCartItems({
       where: {
         id_in: cartItemIds
       }
     });
-    // 7. Return the Order to the client
+   // 7. Return the Order to the client
+    
+    const confirmmail = {
+      from: 'artshaalamusicstore@gmail.com',
+      to: user.email,
+      subject: 'Order is Placed Successfully',
+      html: `<div><h1>Hello ${user.name}</h1>
+      <p>Thank you for your order. We’ll send a confirmation when your order ships</p>
+      <h3>Your Order Detatils</h3><hr></hr><p>Order # ${order.id}</p>
+      
+      <h5>Totoal Amount : ${rzramount}</h5></div>
+      <a href="${process.env
+        .FRONTEND_URL_DEV}/orders">Click Here to Go to see your orders</a>`
+    };
+
+    transporter.sendMail(confirmmail, function(error, info){
+      if (error) {
+        console.log("order error")
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    // 4. Return the message
     return order;
+
+
   },
   //--------------------------------------Add To Cart------------------------------------------------------------------------
   async addToCart(parent, args, ctx, info) {
