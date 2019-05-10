@@ -6,6 +6,15 @@ const { transport, makeANiceEmail } = require("../mail");
 //const { hasPermission } = require("../utils");
 //const stripe = require("../stripe");
 const Razorpay = require("razorpay");
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'artshaalamusicstore@gmail.com',
+    pass: process.env.NODE_EMAIL_PASS
+  }
+});
 
 const instance = new Razorpay({
   key_id: process.env.RAZOR_PAY_KEY,
@@ -410,14 +419,32 @@ console.log(orderItem.user.id)
    
 
     // 3. Email them that reset token
-    const mailRes = await transport.sendMail({
-      from: 'artshaala@music.com',
-      to: user.email,
-      subject: 'Your Password Reset Token',
+    // const mailRes = await transport.sendMail({
+    //   from: 'artshaala@music.com',
+    //   to: user.email,
+    //   subject: 'Your Password Reset Token',
+    //   html: makeANiceEmail(`Your Password Reset Token is here!
+    //   \n\n
+    //   <a href="${process.env
+    //     .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+    // });
+
+    var mailOptions = {
+      from: 'artshaalamusicstore@gmail.com',
+      to: 'abhilash4317@gmail.com',
+      subject: 'Sending Email using Node.js',
       html: makeANiceEmail(`Your Password Reset Token is here!
       \n\n
       <a href="${process.env
-        .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+        .FRONTEND_URL_DEV}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
     });
 
     // 4. Return the message
