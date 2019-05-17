@@ -78,7 +78,7 @@ type Item {
   stock:Int
   size:String
   discount:Int
-  Rating: Float
+  AvgRating: Float
 }
 
 
