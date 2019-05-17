@@ -5,6 +5,7 @@ enum Permission {
 enum Status {
   DELIVERED
   PENDING
+  PROCESSING
 }
 enum Mode {
   OFFLINE
@@ -76,6 +77,8 @@ type Item {
   price: Int!
   stock:Int
   size:String
+  discount:Int
+  Rating: Float
 }
 
 
