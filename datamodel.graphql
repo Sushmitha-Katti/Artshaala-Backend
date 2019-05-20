@@ -77,8 +77,9 @@ type Item {
   price: Int!
   stock:Int
   size:String
-  discount:Int
+  discount:Int @default(value: 0)
   AvgRating: Float
+  discountPrice: Float
 }
 
 
