@@ -1221,6 +1221,9 @@ type Item {
   price: Int!
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 type ItemConnection {
@@ -1245,6 +1248,9 @@ input ItemCreateInput {
   price: Int!
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 input ItemCreateOneInput {
@@ -1268,6 +1274,9 @@ input ItemCreateWithoutCommentInput {
   price: Int!
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 type ItemEdge {
@@ -1300,6 +1309,12 @@ enum ItemOrderByInput {
   stock_DESC
   size_ASC
   size_DESC
+  discount_ASC
+  discount_DESC
+  AvgRating_ASC
+  AvgRating_DESC
+  discountPrice_ASC
+  discountPrice_DESC
 }
 
 type ItemPreviousValues {
@@ -1316,6 +1331,9 @@ type ItemPreviousValues {
   price: Int!
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 type ItemSubscriptionPayload {
@@ -1348,6 +1366,9 @@ input ItemUpdateDataInput {
   price: Int
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 input ItemUpdateimagesInput {
@@ -1366,6 +1387,9 @@ input ItemUpdateInput {
   price: Int
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 input ItemUpdateManyMutationInput {
@@ -1379,6 +1403,9 @@ input ItemUpdateManyMutationInput {
   price: Int
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 input ItemUpdateOneInput {
@@ -1408,6 +1435,9 @@ input ItemUpdateWithoutCommentDataInput {
   price: Int
   stock: Int
   size: String
+  discount: Int
+  AvgRating: Float
+  discountPrice: Float
 }
 
 input ItemUpsertNestedInput {
@@ -1568,6 +1598,30 @@ input ItemWhereInput {
   size_not_starts_with: String
   size_ends_with: String
   size_not_ends_with: String
+  discount: Int
+  discount_not: Int
+  discount_in: [Int!]
+  discount_not_in: [Int!]
+  discount_lt: Int
+  discount_lte: Int
+  discount_gt: Int
+  discount_gte: Int
+  AvgRating: Float
+  AvgRating_not: Float
+  AvgRating_in: [Float!]
+  AvgRating_not_in: [Float!]
+  AvgRating_lt: Float
+  AvgRating_lte: Float
+  AvgRating_gt: Float
+  AvgRating_gte: Float
+  discountPrice: Float
+  discountPrice_not: Float
+  discountPrice_in: [Float!]
+  discountPrice_not_in: [Float!]
+  discountPrice_lt: Float
+  discountPrice_lte: Float
+  discountPrice_gt: Float
+  discountPrice_gte: Float
   AND: [ItemWhereInput!]
   OR: [ItemWhereInput!]
   NOT: [ItemWhereInput!]
@@ -2538,6 +2592,7 @@ type Query {
 enum Status {
   DELIVERED
   PENDING
+  PROCESSING
 }
 
 type Subscription {

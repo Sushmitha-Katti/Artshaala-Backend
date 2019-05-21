@@ -433,7 +433,7 @@ console.log(orderItem.user.id)
     var mailOptions = {
       from: 'artshaalamusicstore@gmail.com',
       to: user.email,
-      subject: 'Sending Email using Node.js',
+      subject: 'Artshaala password reset',
       html: makeANiceEmail(`Your Password Reset Token is here!
       \n\n
       <a href="${process.env
