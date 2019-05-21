@@ -187,23 +187,14 @@ async createaAddress(parent, args, ctx, info) {
    
    
     //Calculate discountprice if there is a dicount
-    if(args.discount || args.discount)
+    if(args.discount || args.price)
     {
-      const discountPrice = price-((discount*price)/100);
+      updates.discountPrice = price-((discount*price)/100);
     }
-    if(discountPrice)
-    {
-        updates.discountPrice = discountPrice
-    }
-     //Check if he is a admin or not
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
+    
       
   
-      if ( !hasPermissions) {
-        throw new Error("You don't have permission to do that!");
-      }
+      
   
     // run the update method
     return ctx.db.mutation.updateItem(
