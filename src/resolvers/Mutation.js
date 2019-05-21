@@ -113,6 +113,12 @@ async createaAddress(parent, args, ctx, info) {
     }
 
     const createitem = {...args};
+    const discountPrice = args.price - (args.discount * args.price/100);
+    createitem.discountPrice = discountPrice;
+    console.log("*******************************");
+    console.log("Price", args.price);
+    console.log("discount", args.discount);
+    console.log(discountPrice);
    
     //const images= createitem.imagew;
     delete createitem.images
@@ -138,7 +144,7 @@ async createaAddress(parent, args, ctx, info) {
     return item;
   },
   //--------------------------------------Update Item--------------------------------------------------------------
-  updateItem(parent, args, ctx, info) {
+  async updateItem(parent, args, ctx, info) {
 
     //Check whether they are logged in or not
     if (!ctx.request.userId) {
@@ -158,7 +164,38 @@ async createaAddress(parent, args, ctx, info) {
     const updates = { ...args };
     // remove the ID from the updates
     delete updates.id;
-    //Check if he is a admin or not
+
+
+     //Query the item
+     const item = await ctx.db.query.item(
+      {
+        where:{ id:args.id},
+        
+      },
+        
+      `{
+        discount
+        price
+      }`
+
+    );
+
+    //initialize the price
+   const price = args.price ? args.price : item.price;
+   const discount= args.discount ? args.discount : item.discount;
+
+   
+   
+    //Calculate discountprice if there is a dicount
+    if(args.discount || args.discount)
+    {
+      const discountPrice = price-((discount*price)/100);
+    }
+    if(discountPrice)
+    {
+        updates.discountPrice = discountPrice
+    }
+     //Check if he is a admin or not
     const hasPermissions = ctx.request.user.permissions.includes(
       "ADMIN"
     );
@@ -557,8 +594,7 @@ console.log(orderItem.user.id)
         user: { connect: { id: userId } }
       };
       delete orderItem.id;
-      console.log("*************************")
-      console.log(orderItem.images[0]);
+      
     
       return orderItem;
     });
@@ -695,11 +731,28 @@ console.log(orderItem.user.id)
     
     delete review.itemid;
     console.log(review)
+
+    const item = await ctx.db.query.item(
+      {
+        where:{ id:args.itemid},
+
+      },
+
+      `{
+        AvgRating
+        comment{
+          id
+        }
+      }`
+
+    );
+    const avgrating = (item.AvgRating*item.comment.length+args.rating)/(item.comment.length + 1);
+
     const comment = await ctx.db.mutation.updateItem(
       {
         where: { id: args.itemid },
         data:{
-        
+          AvgRating: avgrating,
           comment: {
             create:{
             ...review,
