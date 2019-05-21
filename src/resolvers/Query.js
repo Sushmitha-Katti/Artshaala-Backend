@@ -31,7 +31,7 @@ const Query = {
         where:{ status:args.status},
         orderBy:  'status_DESC'
       },
-
+        
       info
 
     );
@@ -123,8 +123,7 @@ const Query = {
 
   async order(parent, args, ctx, info) {
     // 1. Make sure they are logged in
-    console.log('*****************************')
-    console.log(args)
+   
 
     if (!ctx.request.userId) {
       throw new Error("You arent logged in!");
