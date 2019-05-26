@@ -6,6 +6,7 @@ type SuccessMessage {
 enum Status {
   DELIVERED
   PENDING
+  PROCESSING
 }
 enum Mode {
   OFFLINE
@@ -52,10 +53,10 @@ type Query {
   blogs(orderBy: BlogOrderByInput): [Blog]!
   blog(id: ID!): Blog
   newsletters(where: NewsletterWhereInput): [Newsletter]
-  contacts(orderBy: ContactOrderByInput) :[Contact]
+  contacts(status: ContactStatus,orderBy: ContactOrderByInput) :[Contact]
   address(where: AddressWhereUniqueInput!): Address
   addresses(where: AddressWhereInput): [Address]
-  adminorders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
+  adminorders(status: Status, orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
   
 }
 

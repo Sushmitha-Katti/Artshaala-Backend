@@ -16,6 +16,7 @@ const Query = {
     const { userId } = ctx.request;
     console.log(userId)
     // check if he is a admin or not
+    console.log('***************************************')
     if (!userId) {
     throw new Error("You must be signed in soooon");
   }
@@ -100,8 +101,10 @@ const Query = {
       throw new Error("You arent logged in!");
     }
       // 2. Query contacts
+      console.log("status,args".status)
       const contacts = await ctx.db.query.contacts(
         {
+          where:{ status:args.status},
            orderBy:  'createdAt_DESC'
           
         },
