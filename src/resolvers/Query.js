@@ -14,7 +14,6 @@ const Query = {
   async  adminorders(parent, args, ctx, info){
 
     const { userId } = ctx.request;
-    console.log(userId)
     // check if he is a admin or not
     if (!userId) {
     throw new Error("You must be signed in soooon");
@@ -26,9 +25,10 @@ const Query = {
     if ( !hasPermissions) {
       throw new Error("You don't have permission to do that!");
     }
+    console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm........................................................cls")
+    console.log(args)
     const pendingaddress = await ctx.db.query.orders(
       {
-        where:{ status:args.status},
         orderBy:  'status_DESC'
       },
         
@@ -102,8 +102,7 @@ const Query = {
       // 2. Query contacts
       const contacts = await ctx.db.query.contacts(
         {
-           orderBy:  'createdAt_DESC'
-          
+           orderBy:  args.orderBy
         },
         info
       );
