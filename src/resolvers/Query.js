@@ -1,6 +1,7 @@
 const { forwardTo } = require("prisma-binding");
 const Query = {
-  items: forwardTo("db"),
+ 
+  items: forwardTo('db'),
   item: forwardTo("db"),
   commentsConnection: forwardTo("db"),
   itemsConnection: forwardTo("db"),
@@ -8,6 +9,9 @@ const Query = {
   address: forwardTo("db"),
   addresses: forwardTo("db"),
   newsletters: forwardTo("db"),
+
+
+
 
 
 
@@ -166,6 +170,57 @@ const Query = {
       },
       info
     );
+  },
+
+  async filteritems(parent, args, ctx, info) {   
+    let iteminput = {}
+    orInputs = []
+    
+    if(Object.keys(args.selectbrand).length>0){
+        iteminput['AND']  = orInputs.push({'OR':args.selectbrand})
+        
+    }
+    if(args.category){
+      iteminput['category'] = args.category
+    }
+    if(args.price){
+      orprice = []
+     
+      if (args.price.length === 2){
+        orprice.push({'price_gte':args.price[0],'price_lte':args.price[1]})    
+      }
+      else{
+        orprice.push({'price_gte':args.price[0]})
+        
+    }
+    orInputs.push({'OR': orprice})
+    iteminput['AND'] = orInputs
+          
+
+    }
+    if(args.rating){
+      if(args.rating === -1){
+        orInputs.push({'AvgRating': null})
+      }
+      else
+      orInputs.push({'AvgRating_gte':args.rating})
+      iteminput['AND'] = orInputs
+    }
+    
+    
+    return ctx.db.query.items(
+      {
+        where: iteminput
+        
+            
+          
+          
+        
+      },
+      info
+    );
+    
+   
   },
   
   
