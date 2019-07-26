@@ -283,12 +283,13 @@ async updateorder(parent, args, ctx, info) {
   if ( !hasPermissions) {
     throw new Error("You don't have permission to do that!");
   }
-  
+  console.log("**********************STATUS**********************")
+  console.log(args.status);
  // run the update status
  return ctx.db.mutation.updateOrder(
   {
     data: {
-      status: "DELIVERED"
+      status: args.status === 'PENDING'? "PROCESSING": "DELIVERED"
     },
     where: {
       id: args.id

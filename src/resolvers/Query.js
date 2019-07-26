@@ -1,6 +1,7 @@
 const { forwardTo } = require("prisma-binding");
 const Query = {
-  items: forwardTo("db"),
+ 
+  items: forwardTo('db'),
   item: forwardTo("db"),
   commentsConnection: forwardTo("db"),
   itemsConnection: forwardTo("db"),
@@ -11,10 +12,14 @@ const Query = {
 
 
 
+
+
+
   async  adminorders(parent, args, ctx, info){
 
     const { userId } = ctx.request;
     // check if he is a admin or not
+    console.log('***************************************')
     if (!userId) {
     throw new Error("You must be signed in soooon");
   }
@@ -100,9 +105,14 @@ const Query = {
       throw new Error("You arent logged in!");
     }
       // 2. Query contacts
+      console.log("status,args".status)
       const contacts = await ctx.db.query.contacts(
         {
-           orderBy:  args.orderBy
+
+          where:{ status:args.status},
+           orderBy:  'createdAt_DESC'
+          
+
         },
         info
       );
@@ -162,6 +172,57 @@ const Query = {
       },
       info
     );
+  },
+
+  async filteritems(parent, args, ctx, info) {   
+    let iteminput = {}
+    orInputs = []
+    
+    if(Object.keys(args.selectbrand).length>0){
+        iteminput['AND']  = orInputs.push({'OR':args.selectbrand})
+        
+    }
+    if(args.category){
+      iteminput['category'] = args.category
+    }
+    if(args.price){
+      orprice = []
+     
+      if (args.price.length === 2){
+        orprice.push({'price_gte':args.price[0],'price_lte':args.price[1]})    
+      }
+      else{
+        orprice.push({'price_gte':args.price[0]})
+        
+    }
+    orInputs.push({'OR': orprice})
+    iteminput['AND'] = orInputs
+          
+
+    }
+    if(args.rating){
+      if(args.rating === -1){
+        orInputs.push({'AvgRating': null})
+      }
+      else
+      orInputs.push({'AvgRating_gte':args.rating})
+      iteminput['AND'] = orInputs
+    }
+    
+    
+    return ctx.db.query.items(
+      {
+        where: iteminput
+        
+            
+          
+          
+        
+      },
+      info
+    );
+    
+   
   },
   
   
