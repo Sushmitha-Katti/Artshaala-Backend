@@ -211,11 +211,7 @@ const Query = {
     return ctx.db.query.items(
       {
         where: iteminput
-        
-            
-          
-          
-        
+           
       },
       info
     );
