@@ -6,6 +6,7 @@ type SuccessMessage {
 enum Status {
   DELIVERED
   PENDING
+  PROCESSING
 }
 enum Mode {
   OFFLINE
@@ -49,6 +50,7 @@ type Mutation {
 
 type Query {
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
+  filteritems(price: [Int], rating: Int,category:String,selectbrand:[ItemWhereInput], orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
   item(where: ItemWhereUniqueInput!): Item
   itemsConnection(where: ItemWhereInput): ItemConnection!
   me: User
@@ -60,7 +62,7 @@ type Query {
   blogs(orderBy: BlogOrderByInput): [Blog]!
   blog(id: ID!): Blog
   newsletters(where: NewsletterWhereInput): [Newsletter]
-  contacts(orderBy: ContactOrderByInput) :[Contact]
+  contacts(status: ContactStatus,orderBy: ContactOrderByInput) :[Contact]
   address(where: AddressWhereUniqueInput!): Address
   addresses(where: AddressWhereInput): [Address]
   adminorders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
@@ -70,6 +72,7 @@ type Query {
   subcategories(where: SubcategoryWhereInput, orderBy: SubcategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subcategory]!
   brand(where: BrandWhereUniqueInput!): Brand
   brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
+
   
 }
 
