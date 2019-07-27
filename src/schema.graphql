@@ -14,9 +14,8 @@ enum Mode {
 }
 
 type Mutation {
-  createItem(discountPrice: Float, discount: Int,title: String!,description: String, specification: String!, category: String ,brand:String, type: String, price: Int!,stock:Int, size:String, images: [String] ): Item!
-  
-  updateItem(discountPrice: Float,id: ID!, title: String,description: String, specification: String, category: String ,brand:String, type: String, price: Int,stock:Int, size:String,discount:Int): Item!
+  createItem(discountPrice: Float, discount: Int,title: String!,description: String, specification: String!, category: CategoryWhereUniqueInput ,brand:BrandWhereUniqueInput, type: SubcategoryWhereUniqueInput, price: Int!,stock:Int, size:String, images: [String] ): Item!
+  updateItem(discountPrice: Float,id: ID!, title: String,description: String, specification: String,category: CategoryWhereUniqueInput ,brand:BrandWhereUniqueInput, type: SubcategoryWhereUniqueInput,price: Int,stock:Int, size:String,discount:Int): Item!
   deleteItem(id: ID!): Item
   deleteOrder(id: ID!): Order
   updateAddress(id: ID!,mobile:String,pincode:String, addressline1:String!, addressline2:String, landmark:String, city: String!, state:String!): Address
@@ -38,6 +37,15 @@ type Mutation {
   createContact(email:String!, name:String!, phone: String!, message: String!, subject: String!): Contact!
   updateContact(id: ID!, status: ContactStatus): Contact!
   updateorder(id:ID!, status:Status): Order!
+  createCategory(title:String!,status:State):Category!
+  updateCategory(id:ID!,title:String!,status:State):Category!
+  deleteCategory(id:ID!):Category!
+  createSubcategory(title:String!,category:CategoryWhereUniqueInput,status:State):Subcategory!
+  updateSubcategory(id:ID!,title:String!,category:CategoryWhereUniqueInput,status:State):Subcategory!
+  deleteSubcategory(id:ID!):Subcategory!
+  createBrand(title:String!,status:State):Brand!
+  updateBrand(id:ID!,title:String!,status:State):Brand!
+  deleteBrand(id:ID!):Brand!
 }
 
 type Query {
@@ -57,7 +65,14 @@ type Query {
   contacts(status: ContactStatus,orderBy: ContactOrderByInput) :[Contact]
   address(where: AddressWhereUniqueInput!): Address
   addresses(where: AddressWhereInput): [Address]
-  adminorders(status: Status, orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
+  adminorders(orderBy: OrderOrderByInput,where:OrderWhereInput): [Order]!
+  category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
+  subcategory(where: SubcategoryWhereUniqueInput!): Subcategory
+  subcategories(where: SubcategoryWhereInput, orderBy: SubcategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subcategory]!
+  brand(where: BrandWhereUniqueInput!): Brand
+  brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
+
   
 }
 
