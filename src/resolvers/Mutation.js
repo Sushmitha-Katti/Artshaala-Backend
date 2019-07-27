@@ -93,261 +93,8 @@ async createaAddress(parent, args, ctx, info) {
     info
   );
 },
- 
-//----------------------------------- create new category ---------------------------------------------------
 
-  async createCategory(parent,args,ctx,info){
 
-    if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-    const category = await ctx.db.mutation.createCategory(
-      {
-        data: {
-          //  to create a relationship between the Item and the User
-          
-          ...args,
-          
-        }
-      },
-      info
-    );
-    return category;
-    
-  },
-//----------------------------------------- update category --------------------------------------
-
-  async updateCategory(parent,args,ctx,info){
-
-     //Check whether they are logged in or not
-     if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    //check if the user has the permision to do that
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-     // first take a copy of the updates
-     const updates = { ...args };
-     // remove the ID from the updates
-     delete updates.id;
-    return ctx.db.mutation.updateCategory(
-      {
-        data: updates,
-        where: {
-          id: args.id
-        }
-      },
-      info
-    );
-
-  },
-
-  //----------------------------------delete category--------------------------------------
-
-  async deleteCategory(parent,args,ctx,info){
-
-     //Check whether they are logged in or not
-     if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    //check if the user has the permision to do that
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-    const where = { id: args.id };
-    return ctx.db.mutation.deleteCategory({ where }, info);
-  },
-
-  //---------------------------------- create subcategory ----------------------------------
-  
-  async createSubcategory(parent,args,ctx,info){
-
-     //Check whether they are logged in or not
-     if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    //check if the user has the permision to do that
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-    
-    const subcategory = await ctx.db.mutation.createSubcategory(
-      {
-        data: {
-          data:{
-            title:args.title,
-            category: {
-              connect: args.category
-            }
-          }  
-        }
-      },
-      info
-    );
-    return subcategory;
-    
-  },
-
-  //---------------------------------- update subcategory --------------------------------------
-
-  async updateSubcategory(parent,args,ctx,info){
-      //Check whether they are logged in or not
-      if (!ctx.request.userId) {
-        throw new Error("You must be logged in to do that!");
-      }
-  
-      //check if the user has the permision to do that
-      const hasPermissions = ctx.request.user.permissions.includes(
-        "ADMIN"
-      );
-  
-      if (!hasPermissions) {
-        throw new Error("You don't have permission to do that!");
-      }
-      
-      return ctx.db.mutation.updateSubcategory(
-        {
-          data:{
-            title:args.title,
-            category: {
-              connect: args.category
-            }
-          } ,
-          where: {
-            id: args.id
-          }
-        },
-        info
-      );
-  
-  },
-
-  //------------------------------------ delete subcategory ------------------------------------------
-
-  async deleteSubcategory(parent,args,ctx,info){
-
-     //Check whether they are logged in or not
-     if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    //check if the user has the permision to do that
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-    const where = { id: args.id };
-    return ctx.db.mutation.deleteSubcategory({ where }, info);
-  },
-
-  //------------------------------------ create brand --------------------------------------------
-
-  async createBrand(parent,args,ctx,info){
-
-    if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-    const brand = await ctx.db.mutation.createBrand(
-      {
-        data: {
-          //  to create a relationship between the Item and the User
-          
-          ...args,
-          
-        }
-      },
-      info
-    );
-    return brand;
-  },
-
-  //------------------------------------- update brand ------------------------------------------------
-
-  async updateBrand(parent,args,ctx,info){
-
-     //Check whether they are logged in or not
-     if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    //check if the user has the permision to do that
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-     // first take a copy of the updates
-     const updates = { ...args };
-     // remove the ID from the updates
-     delete updates.id;
-    return ctx.db.mutation.updateBrand(
-      {
-        data: updates,
-        where: {
-          id: args.id
-        }
-      },
-      info
-    );
-
-  },
-
-  //--------------------------------------- delete brand ----------------------------------------------
-
-  async deleteBrand(parent,args,ctx,info){
-     //Check whether they are logged in or not
-     if (!ctx.request.userId) {
-      throw new Error("You must be logged in to do that!");
-    }
-
-    //check if the user has the permision to do that
-    const hasPermissions = ctx.request.user.permissions.includes(
-      "ADMIN"
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
-    const where = { id: args.id };
-    return ctx.db.mutation.deleteBrand({ where }, info);
-  },
 
   //--------------------------------- for creating new item----------------------------------------------------
 
@@ -375,9 +122,7 @@ async createaAddress(parent, args, ctx, info) {
    
     //const images= createitem.imagew;
     delete createitem.images
-    delete createitem.category
-    delete createitem.type
-    delete createitem.brand
+    
     //console.log(images)
 
     const item = await ctx.db.mutation.createItem(
@@ -388,15 +133,6 @@ async createaAddress(parent, args, ctx, info) {
           ...createitem,
           images:{
             set: args.images
-          },
-          category:{
-            connect:args.category
-          },
-          type:{
-            connect:args.type
-          },
-          brand:{
-            connect:args.brand
           }
         }
       },
@@ -428,9 +164,7 @@ async createaAddress(parent, args, ctx, info) {
     const updates = { ...args };
     // remove the ID from the updates
     delete updates.id;
-    delete updates.category
-    delete updates.type
-    delete updates.brand
+
 
      //Query the item
      const item = await ctx.db.query.item(
@@ -465,18 +199,7 @@ async createaAddress(parent, args, ctx, info) {
     // run the update method
     return ctx.db.mutation.updateItem(
       {
-        data:{
-          updates,
-          category:{
-            connect:args.category
-          },
-          type:{
-            connect:args.type
-          },
-          brand:{
-            connect:args.brand
-          }
-        },
+        data: updates,
         where: {
           id: args.id
         }
