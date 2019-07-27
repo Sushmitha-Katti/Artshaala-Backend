@@ -9,12 +9,6 @@ const Query = {
   address: forwardTo("db"),
   addresses: forwardTo("db"),
   newsletters: forwardTo("db"),
-  categories: forwardTo("db"),
-  category:forwardTo("db"),
-  subcategories:forwardTo("db"),
-  subcategory:forwardTo("db"),
-  brands:forwardTo("db"),
-  brand:forwardTo("db"),
 
 
 

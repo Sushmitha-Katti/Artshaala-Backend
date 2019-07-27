@@ -7,7 +7,6 @@ enum Status {
   PENDING
   PROCESSING
 }
-
 enum Mode {
   OFFLINE
   ONLINE
@@ -17,12 +16,6 @@ enum ContactStatus {
   DONE
   PENDING
 }
-
-enum State {
-  ACTIVE
-  INACTIVE
-}
-
 type User {
   id: ID!@id
   name: String!
@@ -69,31 +62,12 @@ type Comment {
   updatedAt: DateTime! @updatedAt
 }
 
-type Category {
-  id: ID!@id
-  title:String!
-  status:State
-}
-
-type Subcategory {
-  id: ID!@id
-  title:String!
-  category:Category! @relation(link: TABLE)
-  status:State
-}
-
-type Brand {
-  id: ID!@id
-  title:String!
-  status:State
-}
-
 type Item {
   id: ID!@id
   title: String!
-  category: Category
-  type: Subcategory
-  brand:Brand
+  type:String!
+  category:String
+  brand:String
   specification: String!
   images: [String] @scalarList(strategy: RELATION)
   description:String!
