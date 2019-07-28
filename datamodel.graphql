@@ -7,15 +7,19 @@ enum Status {
   PENDING
   PROCESSING
 }
+
 enum Mode {
   OFFLINE
   ONLINE
 }
 
 enum ContactStatus {
-  DONE
+  CONTACTED
   PENDING
 }
+
+
+
 type User {
   id: ID!@id
   name: String!
@@ -27,7 +31,7 @@ type User {
   cart: [CartItem!]!@scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  address:Address
+  address:Address @relation(onDelete: CASCADE)
 }
 
 type CartItem {
@@ -52,7 +56,7 @@ type Blog {
 }
 
 
-type Comment {
+type Review {
   id: ID!@id
   comment: String
   rating: Float
@@ -62,21 +66,40 @@ type Comment {
   updatedAt: DateTime! @updatedAt
 }
 
+type Category {
+  id: ID!@id
+  title:String! @unique
+  subcategory:[Subcategory] @relation(onDelete: CASCADE)
+  
+}
+
+type Subcategory {
+  id: ID!@id
+  title:String! @unique
+  category:Category! 
+  
+}
+
+type Brand {
+  id: ID!@id
+  title:String! @unique
+ 
+}
+
 type Item {
   id: ID!@id
   title: String!
-  type:String!
-  category:String
-  brand:String
+  category: Category  
+  type: Subcategory  
+  brand:Brand  
   specification: String!
   images: [String] @scalarList(strategy: RELATION)
   description:String!
-  comment: [Comment]
+  review: [Review]@relation(link: TABLE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   price: Int!
   stock:Int
-  size:String
   discount:Int @default(value: 0)
   AvgRating: Float
   discountPrice: Float
@@ -112,14 +135,13 @@ type OrderItem {
   size:String
   quantity: Int! @default(value: 1)
   itemid:ID
-  
   user: User
 }
 
 
 type Newsletter{
   id: ID! @id
-  email: String!
+  email: String! @unique
 }
 type Contact{
   id: ID! @id
