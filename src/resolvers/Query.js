@@ -15,6 +15,9 @@ const Query = {
 
 
 
+
+
+
   async  adminorders(parent, args, ctx, info){
 
     const { userId } = ctx.request;
@@ -179,11 +182,13 @@ const Query = {
     orInputs = []
     
     if(Object.keys(args.selectbrand).length>0){
-        iteminput['AND']  = orInputs.push({'OR':args.selectbrand})
+
+        iteminput['AND']  = orInputs.push({brand:{'OR':args.selectbrand}})
         
     }
     if(args.category){
-      iteminput['category'] = args.category
+      iteminput['category'] = {title:args.category}
+
     }
     if(args.price){
       orprice = []
@@ -213,11 +218,7 @@ const Query = {
     return ctx.db.query.items(
       {
         where: iteminput
-        
-            
-          
-          
-        
+
       },
       info
     );
