@@ -9,12 +9,9 @@ const Query = {
   address: forwardTo("db"),
   addresses: forwardTo("db"),
   newsletters: forwardTo("db"),
-  categories: forwardTo("db"),
-  category:forwardTo("db"),
-  subcategories:forwardTo("db"),
-  subcategory:forwardTo("db"),
-  brands:forwardTo("db"),
-  brand:forwardTo("db"),
+
+
+
 
 
 
@@ -185,11 +182,13 @@ const Query = {
     orInputs = []
     
     if(Object.keys(args.selectbrand).length>0){
+
         iteminput['AND']  = orInputs.push({brand:{'OR':args.selectbrand}})
         
     }
     if(args.category){
       iteminput['category'] = {title:args.category}
+
     }
     if(args.price){
       orprice = []
@@ -219,7 +218,7 @@ const Query = {
     return ctx.db.query.items(
       {
         where: iteminput
-           
+
       },
       info
     );

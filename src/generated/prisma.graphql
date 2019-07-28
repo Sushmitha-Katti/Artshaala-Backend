@@ -17,7 +17,6 @@ type AddressConnection {
 }
 
 input AddressCreateInput {
-  id: ID
   mobile: String!
   pincode: String!
   addressline1: String!
@@ -34,7 +33,6 @@ input AddressCreateOneWithoutUserInput {
 }
 
 input AddressCreateWithoutUserInput {
-  id: ID
   mobile: String!
   pincode: String!
   addressline1: String!
@@ -277,15 +275,7 @@ type AggregateBlog {
   count: Int!
 }
 
-type AggregateBrand {
-  count: Int!
-}
-
 type AggregateCartItem {
-  count: Int!
-}
-
-type AggregateCategory {
   count: Int!
 }
 
@@ -310,10 +300,6 @@ type AggregateOrder {
 }
 
 type AggregateOrderItem {
-  count: Int!
-}
-
-type AggregateSubcategory {
   count: Int!
 }
 
@@ -344,7 +330,6 @@ type BlogConnection {
 }
 
 input BlogCreateInput {
-  id: ID
   title: String!
   author: String!
   summery: String!
@@ -545,142 +530,6 @@ input BlogWhereUniqueInput {
   id: ID
 }
 
-type Brand {
-  id: ID!
-  title: String!
-  status: State
-}
-
-type BrandConnection {
-  pageInfo: PageInfo!
-  edges: [BrandEdge]!
-  aggregate: AggregateBrand!
-}
-
-input BrandCreateInput {
-  id: ID
-  title: String!
-  status: State
-}
-
-input BrandCreateOneInput {
-  create: BrandCreateInput
-  connect: BrandWhereUniqueInput
-}
-
-type BrandEdge {
-  node: Brand!
-  cursor: String!
-}
-
-enum BrandOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  status_ASC
-  status_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type BrandPreviousValues {
-  id: ID!
-  title: String!
-  status: State
-}
-
-type BrandSubscriptionPayload {
-  mutation: MutationType!
-  node: Brand
-  updatedFields: [String!]
-  previousValues: BrandPreviousValues
-}
-
-input BrandSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: BrandWhereInput
-  AND: [BrandSubscriptionWhereInput!]
-  OR: [BrandSubscriptionWhereInput!]
-  NOT: [BrandSubscriptionWhereInput!]
-}
-
-input BrandUpdateDataInput {
-  title: String
-  status: State
-}
-
-input BrandUpdateInput {
-  title: String
-  status: State
-}
-
-input BrandUpdateManyMutationInput {
-  title: String
-  status: State
-}
-
-input BrandUpdateOneInput {
-  create: BrandCreateInput
-  update: BrandUpdateDataInput
-  upsert: BrandUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: BrandWhereUniqueInput
-}
-
-input BrandUpsertNestedInput {
-  update: BrandUpdateDataInput!
-  create: BrandCreateInput!
-}
-
-input BrandWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  status: State
-  status_not: State
-  status_in: [State!]
-  status_not_in: [State!]
-  AND: [BrandWhereInput!]
-  OR: [BrandWhereInput!]
-  NOT: [BrandWhereInput!]
-}
-
-input BrandWhereUniqueInput {
-  id: ID
-}
-
 type CartItem {
   id: ID!
   quantity: Int!
@@ -697,7 +546,6 @@ type CartItemConnection {
 }
 
 input CartItemCreateInput {
-  id: ID
   quantity: Int
   item: ItemCreateOneInput
   user: UserCreateOneWithoutCartInput!
@@ -709,7 +557,6 @@ input CartItemCreateManyWithoutUserInput {
 }
 
 input CartItemCreateWithoutUserInput {
-  id: ID
   quantity: Int
   item: ItemCreateOneInput
 }
@@ -896,149 +743,6 @@ input CartItemWhereUniqueInput {
   id: ID
 }
 
-type Category {
-  id: ID!
-  title: String!
-  status: State
-}
-
-type CategoryConnection {
-  pageInfo: PageInfo!
-  edges: [CategoryEdge]!
-  aggregate: AggregateCategory!
-}
-
-input CategoryCreateInput {
-  id: ID
-  title: String!
-  status: State
-}
-
-input CategoryCreateOneInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
-}
-
-type CategoryEdge {
-  node: Category!
-  cursor: String!
-}
-
-enum CategoryOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  status_ASC
-  status_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type CategoryPreviousValues {
-  id: ID!
-  title: String!
-  status: State
-}
-
-type CategorySubscriptionPayload {
-  mutation: MutationType!
-  node: Category
-  updatedFields: [String!]
-  previousValues: CategoryPreviousValues
-}
-
-input CategorySubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: CategoryWhereInput
-  AND: [CategorySubscriptionWhereInput!]
-  OR: [CategorySubscriptionWhereInput!]
-  NOT: [CategorySubscriptionWhereInput!]
-}
-
-input CategoryUpdateDataInput {
-  title: String
-  status: State
-}
-
-input CategoryUpdateInput {
-  title: String
-  status: State
-}
-
-input CategoryUpdateManyMutationInput {
-  title: String
-  status: State
-}
-
-input CategoryUpdateOneInput {
-  create: CategoryCreateInput
-  update: CategoryUpdateDataInput
-  upsert: CategoryUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: CategoryWhereUniqueInput
-}
-
-input CategoryUpdateOneRequiredInput {
-  create: CategoryCreateInput
-  update: CategoryUpdateDataInput
-  upsert: CategoryUpsertNestedInput
-  connect: CategoryWhereUniqueInput
-}
-
-input CategoryUpsertNestedInput {
-  update: CategoryUpdateDataInput!
-  create: CategoryCreateInput!
-}
-
-input CategoryWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  status: State
-  status_not: State
-  status_in: [State!]
-  status_not_in: [State!]
-  AND: [CategoryWhereInput!]
-  OR: [CategoryWhereInput!]
-  NOT: [CategoryWhereInput!]
-}
-
-input CategoryWhereUniqueInput {
-  id: ID
-}
-
 type Comment {
   id: ID!
   comment: String
@@ -1056,7 +760,6 @@ type CommentConnection {
 }
 
 input CommentCreateInput {
-  id: ID
   comment: String
   rating: Float
   item: ItemCreateOneWithoutCommentInput!
@@ -1069,7 +772,6 @@ input CommentCreateManyWithoutItemInput {
 }
 
 input CommentCreateWithoutItemInput {
-  id: ID
   comment: String
   rating: Float
   user: UserCreateOneInput!
@@ -1310,7 +1012,6 @@ type ContactConnection {
 }
 
 input ContactCreateInput {
-  id: ID
   email: String!
   phone: String!
   subject: String!
@@ -1508,9 +1209,9 @@ scalar DateTime
 type Item {
   id: ID!
   title: String!
-  category: Category
-  type: Subcategory
-  brand: Brand
+  type: String!
+  category: String
+  brand: String
   specification: String!
   images: [String!]!
   description: String!
@@ -1536,11 +1237,10 @@ input ItemCreateimagesInput {
 }
 
 input ItemCreateInput {
-  id: ID
   title: String!
-  category: CategoryCreateOneInput
-  type: SubcategoryCreateOneInput
-  brand: BrandCreateOneInput
+  type: String!
+  category: String
+  brand: String
   specification: String!
   images: ItemCreateimagesInput
   description: String!
@@ -1564,11 +1264,10 @@ input ItemCreateOneWithoutCommentInput {
 }
 
 input ItemCreateWithoutCommentInput {
-  id: ID
   title: String!
-  category: CategoryCreateOneInput
-  type: SubcategoryCreateOneInput
-  brand: BrandCreateOneInput
+  type: String!
+  category: String
+  brand: String
   specification: String!
   images: ItemCreateimagesInput
   description: String!
@@ -1590,6 +1289,12 @@ enum ItemOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  type_ASC
+  type_DESC
+  category_ASC
+  category_DESC
+  brand_ASC
+  brand_DESC
   specification_ASC
   specification_DESC
   description_ASC
@@ -1615,6 +1320,9 @@ enum ItemOrderByInput {
 type ItemPreviousValues {
   id: ID!
   title: String!
+  type: String!
+  category: String
+  brand: String
   specification: String!
   images: [String!]!
   description: String!
@@ -1648,9 +1356,9 @@ input ItemSubscriptionWhereInput {
 
 input ItemUpdateDataInput {
   title: String
-  category: CategoryUpdateOneInput
-  type: SubcategoryUpdateOneInput
-  brand: BrandUpdateOneInput
+  type: String
+  category: String
+  brand: String
   specification: String
   images: ItemUpdateimagesInput
   description: String
@@ -1669,9 +1377,9 @@ input ItemUpdateimagesInput {
 
 input ItemUpdateInput {
   title: String
-  category: CategoryUpdateOneInput
-  type: SubcategoryUpdateOneInput
-  brand: BrandUpdateOneInput
+  type: String
+  category: String
+  brand: String
   specification: String
   images: ItemUpdateimagesInput
   description: String
@@ -1686,6 +1394,9 @@ input ItemUpdateInput {
 
 input ItemUpdateManyMutationInput {
   title: String
+  type: String
+  category: String
+  brand: String
   specification: String
   images: ItemUpdateimagesInput
   description: String
@@ -1715,9 +1426,9 @@ input ItemUpdateOneRequiredWithoutCommentInput {
 
 input ItemUpdateWithoutCommentDataInput {
   title: String
-  category: CategoryUpdateOneInput
-  type: SubcategoryUpdateOneInput
-  brand: BrandUpdateOneInput
+  type: String
+  category: String
+  brand: String
   specification: String
   images: ItemUpdateimagesInput
   description: String
@@ -1768,9 +1479,48 @@ input ItemWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  category: CategoryWhereInput
-  type: SubcategoryWhereInput
-  brand: BrandWhereInput
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  brand: String
+  brand_not: String
+  brand_in: [String!]
+  brand_not_in: [String!]
+  brand_lt: String
+  brand_lte: String
+  brand_gt: String
+  brand_gte: String
+  brand_contains: String
+  brand_not_contains: String
+  brand_starts_with: String
+  brand_not_starts_with: String
+  brand_ends_with: String
+  brand_not_ends_with: String
   specification: String
   specification_not: String
   specification_in: [String!]
@@ -1901,24 +1651,12 @@ type Mutation {
   upsertBlog(where: BlogWhereUniqueInput!, create: BlogCreateInput!, update: BlogUpdateInput!): Blog!
   deleteBlog(where: BlogWhereUniqueInput!): Blog
   deleteManyBlogs(where: BlogWhereInput): BatchPayload!
-  createBrand(data: BrandCreateInput!): Brand!
-  updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
-  updateManyBrands(data: BrandUpdateManyMutationInput!, where: BrandWhereInput): BatchPayload!
-  upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
-  deleteBrand(where: BrandWhereUniqueInput!): Brand
-  deleteManyBrands(where: BrandWhereInput): BatchPayload!
   createCartItem(data: CartItemCreateInput!): CartItem!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
-  createCategory(data: CategoryCreateInput!): Category!
-  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
-  updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
-  upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
-  deleteCategory(where: CategoryWhereUniqueInput!): Category
-  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   createComment(data: CommentCreateInput!): Comment!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
@@ -1955,12 +1693,6 @@ type Mutation {
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
   deleteManyOrderItems(where: OrderItemWhereInput): BatchPayload!
-  createSubcategory(data: SubcategoryCreateInput!): Subcategory!
-  updateSubcategory(data: SubcategoryUpdateInput!, where: SubcategoryWhereUniqueInput!): Subcategory
-  updateManySubcategories(data: SubcategoryUpdateManyMutationInput!, where: SubcategoryWhereInput): BatchPayload!
-  upsertSubcategory(where: SubcategoryWhereUniqueInput!, create: SubcategoryCreateInput!, update: SubcategoryUpdateInput!): Subcategory!
-  deleteSubcategory(where: SubcategoryWhereUniqueInput!): Subcategory
-  deleteManySubcategories(where: SubcategoryWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1987,7 +1719,6 @@ type NewsletterConnection {
 }
 
 input NewsletterCreateInput {
-  id: ID
   email: String!
 }
 
@@ -2099,7 +1830,6 @@ type OrderConnection {
 }
 
 input OrderCreateInput {
-  id: ID
   items: OrderItemCreateManyInput
   total: Int!
   user: UserCreateOneInput!
@@ -2143,7 +1873,6 @@ input OrderItemCreateimagesInput {
 }
 
 input OrderItemCreateInput {
-  id: ID
   title: String!
   type: String!
   category: String
@@ -2833,15 +2562,9 @@ type Query {
   blog(where: BlogWhereUniqueInput!): Blog
   blogs(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blog]!
   blogsConnection(where: BlogWhereInput, orderBy: BlogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlogConnection!
-  brand(where: BrandWhereUniqueInput!): Brand
-  brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
-  brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
-  category(where: CategoryWhereUniqueInput!): Category
-  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
-  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
@@ -2860,18 +2583,10 @@ type Query {
   orderItem(where: OrderItemWhereUniqueInput!): OrderItem
   orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
   orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
-  subcategory(where: SubcategoryWhereUniqueInput!): Subcategory
-  subcategories(where: SubcategoryWhereInput, orderBy: SubcategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subcategory]!
-  subcategoriesConnection(where: SubcategoryWhereInput, orderBy: SubcategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubcategoryConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
-}
-
-enum State {
-  ACTIVE
-  INACTIVE
 }
 
 enum Status {
@@ -2880,160 +2595,16 @@ enum Status {
   PROCESSING
 }
 
-type Subcategory {
-  id: ID!
-  title: String!
-  category: Category!
-  status: State
-}
-
-type SubcategoryConnection {
-  pageInfo: PageInfo!
-  edges: [SubcategoryEdge]!
-  aggregate: AggregateSubcategory!
-}
-
-input SubcategoryCreateInput {
-  id: ID
-  title: String!
-  category: CategoryCreateOneInput!
-  status: State
-}
-
-input SubcategoryCreateOneInput {
-  create: SubcategoryCreateInput
-  connect: SubcategoryWhereUniqueInput
-}
-
-type SubcategoryEdge {
-  node: Subcategory!
-  cursor: String!
-}
-
-enum SubcategoryOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  status_ASC
-  status_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type SubcategoryPreviousValues {
-  id: ID!
-  title: String!
-  status: State
-}
-
-type SubcategorySubscriptionPayload {
-  mutation: MutationType!
-  node: Subcategory
-  updatedFields: [String!]
-  previousValues: SubcategoryPreviousValues
-}
-
-input SubcategorySubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: SubcategoryWhereInput
-  AND: [SubcategorySubscriptionWhereInput!]
-  OR: [SubcategorySubscriptionWhereInput!]
-  NOT: [SubcategorySubscriptionWhereInput!]
-}
-
-input SubcategoryUpdateDataInput {
-  title: String
-  category: CategoryUpdateOneRequiredInput
-  status: State
-}
-
-input SubcategoryUpdateInput {
-  title: String
-  category: CategoryUpdateOneRequiredInput
-  status: State
-}
-
-input SubcategoryUpdateManyMutationInput {
-  title: String
-  status: State
-}
-
-input SubcategoryUpdateOneInput {
-  create: SubcategoryCreateInput
-  update: SubcategoryUpdateDataInput
-  upsert: SubcategoryUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: SubcategoryWhereUniqueInput
-}
-
-input SubcategoryUpsertNestedInput {
-  update: SubcategoryUpdateDataInput!
-  create: SubcategoryCreateInput!
-}
-
-input SubcategoryWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  category: CategoryWhereInput
-  status: State
-  status_not: State
-  status_in: [State!]
-  status_not_in: [State!]
-  AND: [SubcategoryWhereInput!]
-  OR: [SubcategoryWhereInput!]
-  NOT: [SubcategoryWhereInput!]
-}
-
-input SubcategoryWhereUniqueInput {
-  id: ID
-}
-
 type Subscription {
   address(where: AddressSubscriptionWhereInput): AddressSubscriptionPayload
   blog(where: BlogSubscriptionWhereInput): BlogSubscriptionPayload
-  brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
-  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   newsletter(where: NewsletterSubscriptionWhereInput): NewsletterSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
-  subcategory(where: SubcategorySubscriptionWhereInput): SubcategorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -3058,7 +2629,6 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  id: ID
   name: String!
   email: String!
   password: String!
@@ -3089,7 +2659,6 @@ input UserCreatepermissionsInput {
 }
 
 input UserCreateWithoutAddressInput {
-  id: ID
   name: String!
   email: String!
   password: String!
@@ -3100,7 +2669,6 @@ input UserCreateWithoutAddressInput {
 }
 
 input UserCreateWithoutCartInput {
-  id: ID
   name: String!
   email: String!
   password: String!

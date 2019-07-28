@@ -7,7 +7,6 @@ enum Status {
   PENDING
   PROCESSING
 }
-
 enum Mode {
   OFFLINE
   ONLINE
@@ -17,7 +16,6 @@ enum ContactStatus {
   CONTACTED
   PENDING
 }
-
 
 
 type User {
@@ -65,6 +63,7 @@ type Review {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
 
 type Category {
   id: ID!@id
